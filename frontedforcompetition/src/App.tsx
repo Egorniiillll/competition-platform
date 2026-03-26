@@ -1,16 +1,20 @@
 
-import Header from "./Header.tsx";
+import Navbar from "./Navbar.tsx";
+
 
 function App() {
     return (
         <div>
-            <Header/>
-            <h1>Соревнование</h1>
-            <h2>Соревнование</h2>
-            <h3>Соревнование</h3>
-            <p>Соревнование</p>
-            <button>Создать</button>
+
+            <Navbar/>
+            <Routes>
+                <Route path="/" element={<h1>home</h1>}/>
+                <Route path="/competition" element={<h1>competition</h1>}/>
+                <Route path="/account" element={<h1>account</h1>}/>
+            </Routes>
+
         </div>
+
     )
 }
 
