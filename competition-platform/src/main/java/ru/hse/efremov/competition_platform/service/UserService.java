@@ -1,5 +1,6 @@
 package ru.hse.efremov.competition_platform.service;
 
+import org.hibernate.annotations.NotFound;
 import org.springframework.stereotype.Service;
 import ru.hse.efremov.competition_platform.entity.User;
 import ru.hse.efremov.competition_platform.repository.UserRepository;
@@ -14,10 +15,13 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User createUser(String username, String email, LocalDateTime createdAt) {
+    public void createUser(String username, String email, LocalDateTime createdAt) {
         User user = new User(username, email, createdAt);
         userRepository.save(user);
-        return user;
 
+    }
+
+    public User getUser(Integer id){
+        return userRepository.findById(id).orElseThrow();
     }
 }

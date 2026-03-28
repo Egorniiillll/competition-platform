@@ -5,6 +5,7 @@ function Navbar() {
         <header>
             <nav>
                 <Link to="/">Главная</Link>
+                <Link to="/Game">game</Link>
                 <Link to="/competition">competition</Link>
                 <Link to="/account">Мой аккаунт</Link>
             </nav>

@@ -1,7 +1,9 @@
+import GameCard from "../components/GameCard.tsx";
+
 function Game() {
     return (
         <div>
-            <h1>l</h1>
+            <GameCard/>
         </div>
     )
 }
