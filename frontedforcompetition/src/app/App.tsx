@@ -1,18 +1,26 @@
-import Navbar from "../Navbar.tsx";
+
 import {Route, Routes} from "react-router-dom";
-import Game from "../pages/Game.tsx";
+
 import AccountPage from "../pages/AccountPage.tsx";
+import GamePage from "../pages/GamePage.tsx";
+import HomePage from "../pages/HomePage.tsx";
+import CompetitionPage from "../pages/CompetitionPage.tsx";
+import NavBar from "../components/NavBar.tsx";
+
 
 
 function App() {
+
     return (
+
         <div>
 
-            <Navbar/>
+            <NavBar/>
             <Routes>
-                <Route path="/" element={<h1>home</h1>}/>
-                <Route path="/Game" element={<Game/>}/>
-                <Route path="/competition" element={<h1>competition</h1>}/>
+
+                <Route path="/" element={<HomePage/>}/>
+                <Route path="/Game" element={<GamePage/>}/>
+                <Route path="/competition" element={<CompetitionPage/>}/>
                 <Route path="/account" element={<AccountPage/>}/>
             </Routes>
 
@@ -22,3 +30,4 @@ function App() {
 }
 
 export default App
+

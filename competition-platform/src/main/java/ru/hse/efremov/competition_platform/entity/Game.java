@@ -5,6 +5,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,6 +19,10 @@ public class Game {
     private String description;
     private String types;
     private LocalDateTime createdAt;
+    private String imageURL;
+    private String city;
+    private String address;
+    private BigDecimal price;
 
     public Game(String name, String description, String types, LocalDateTime createdAt) {
         this.name = name;

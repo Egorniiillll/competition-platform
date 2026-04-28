@@ -27,4 +27,8 @@ public class GameService {
     public List<Game> getAllGames() {
         return gameRepository.findAll();
     }
+    public Game createNewGameAndRev(String name, String description, String types, LocalDateTime createdAt) {
+        Game game = new Game(name, description, types, createdAt);
+        return gameRepository.save(game);
+    }
 }

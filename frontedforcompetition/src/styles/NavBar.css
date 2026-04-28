@@ -1,0 +1,6 @@
+.NavBar {
+    background-color: #7ba1dc;
+    display: flex;
+    gap: 100px;
+    padding: 10px;
+}

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -15,16 +16,42 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String username;
+    private String firstName;
+    private String secondName;
+    private String thirdName;
     private String email;
-    private LocalDateTime createdAt;
+    private LocalDate birthdayDate;
+    private LocalDateTime dateOfRegistration;
+    private String personalPhone;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+    private String city;
+    private double height;
+    private double weight;
 
     public User() {
     }
 
+    public enum Gender {
+        MALE,
+        FEMALE
+    }
 
-    public User( String username, String email, LocalDateTime createdAt) {
+    public User(String username, String firstName, String secondName,
+                String thirdName, String email, LocalDate birthdayDate,
+                LocalDateTime dateOfRegistration, String personalPhone,
+                Gender gender, String city, double height, double weight) {
         this.username = username;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.thirdName = thirdName;
         this.email = email;
-        this.createdAt = createdAt;
+        this.birthdayDate = birthdayDate;
+        this.dateOfRegistration = dateOfRegistration;
+        this.personalPhone = personalPhone;
+        this.gender = gender;
+        this.city = city;
+        this.height = height;
+        this.weight = weight;
     }
 }
