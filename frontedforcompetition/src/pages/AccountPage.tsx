@@ -8,7 +8,7 @@ function AccountPage() {
     const [error, setError] = useState("")
 
     useEffect(() => {
-        getUser(3).then((data) => {
+        getUser(1).then((data) => {
             setUser(data)
             setLoading(false)
         })
@@ -29,10 +29,19 @@ function AccountPage() {
     return (
         <div>
             <h1>Мой аккаунт</h1>
-            <p>id: {user?.id}</p>
-            <p>username: {user?.username}</p>
-            <p>email: {user?.email}</p>
-            <p>createdAt: {user?.createdAt}</p>
+            <p>Логин: {user?.username}</p>
+            <p>Имя: {user?.firstName}</p>
+            <p>Фамилия: {user?.secondName}</p>
+            <p>Отчество: {user?.thirdName}</p>
+            <p>День Рождение: {user?.birthdayDate}</p>
+            <p>dateOfRegistration: {user?.dateOfRegistration}</p>
+            <p>Номер телефона: {user?.personalPhone}</p>
+            <p>Почта: {user?.email}</p>
+            <p>Пол: {user?.gender}</p>
+            <p>Город: {user?.city}</p>
+            <p>Рост: {user?.height}</p>
+            <p>вес: {user?.weight}</p>
+
         </div>
     )
 }

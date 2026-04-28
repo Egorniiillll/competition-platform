@@ -4,5 +4,10 @@ export type Game = {
     description: string
     types: string
     createdAt: string
-
+    startDate: string
+    endDate: string
+    imageURL: string
+    city: string
+    address: string
+    price: string
 }

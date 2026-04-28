@@ -8,6 +8,7 @@ import ru.hse.efremov.competition_platform.repository.GameRepository;
 import ru.hse.efremov.competition_platform.service.CompetitionService;
 import ru.hse.efremov.competition_platform.service.GameService;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -34,9 +35,17 @@ public class CompetitionController {
         String name = body.get("name");
         String descriptio = body.get("description");
         String types = body.get("types");
+        String imageURL = body.get("imageURL");
+        String city = body.get("city");
+        String address = body.get("address");
+        BigDecimal price = new BigDecimal(body.get("price"));
         LocalDateTime createdAt = LocalDateTime.parse(body.get("createdAt"));
-        Game game = new Game(name, descriptio, types, createdAt);
-        Game game1 = gameService.createNewGameAndRev(name, descriptio, types, createdAt);
+
+
+        Game game1 = gameService.createNewGameAndRev(name, descriptio,
+                types, createdAt, startDate,
+                endDate, imageURL, city,
+                address, price);
 
         competitionService.createNewCompetition(title, description, location, startDate, endDate, game1);
 

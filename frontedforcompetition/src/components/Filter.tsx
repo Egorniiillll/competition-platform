@@ -10,7 +10,7 @@ function Filter({filterType, setFilterType}: FilterProps) {
             <select value={filterType} onChange={(e) => setFilterType(e.target.value)}>
                 <option value="all">Все</option>
                 <option value="n">футбол</option>
-                <option value="chesse">шахматы</option>
+                <option value="Шахматы">Шахматы</option>
             </select>
         </div>
     )

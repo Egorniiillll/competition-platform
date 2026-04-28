@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.hse.efremov.competition_platform.entity.Game;
 import ru.hse.efremov.competition_platform.service.GameService;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +27,17 @@ public class GameConroller {
         String description = body.get("description");
         String types = body.get("types");
         LocalDateTime createdAt = LocalDateTime.parse(body.get("createdAt"));
-        gameService.createNewGame(name, description, types, createdAt);
+        LocalDateTime startDate = LocalDateTime.parse(body.get("startDate"));
+        LocalDateTime endDate = LocalDateTime.parse(body.get("endDate"));
+        String imageURL = body.get("imageURL");
+        String city = body.get("city");
+        String address = body.get("address");
+        BigDecimal price = new BigDecimal(body.get("price"));
+
+        gameService.createNewGame(name, description,
+                types, createdAt, startDate,
+                endDate, imageURL, city,
+                address, price);
 
     }
 

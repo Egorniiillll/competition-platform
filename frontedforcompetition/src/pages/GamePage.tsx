@@ -42,16 +42,20 @@ function GamePage() {
 
     return (
         <div className="GamePage">
-            <h1>Игры</h1>
             <Filter filterType={filterType} setFilterType={setFilterType}/>
             {filterGames.map((game) => (
                 <GameCard
                     key={game.id}
-                    id={game.id}
+                    imageURL={game.imageURL}
                     name={game.name}
                     description={game.description}
                     types={game.types}
                     createdAt={game.createdAt}
+                    startDate={game.startDate}
+                    endDate={game.endDate}
+                    city={game.city}
+                    address={game.address}
+                    price={game.price}
                 />
             ))}
         </div>

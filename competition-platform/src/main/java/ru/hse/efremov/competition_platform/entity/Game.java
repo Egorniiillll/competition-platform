@@ -19,16 +19,27 @@ public class Game {
     private String description;
     private String types;
     private LocalDateTime createdAt;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private String imageURL;
     private String city;
     private String address;
     private BigDecimal price;
 
-    public Game(String name, String description, String types, LocalDateTime createdAt) {
+    public Game(String name, String description, String types,
+                LocalDateTime createdAt, LocalDateTime startDate,
+                LocalDateTime endDate, String imageURL,
+                String city, String address, BigDecimal price) {
         this.name = name;
         this.description = description;
         this.types = types;
         this.createdAt = createdAt;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.imageURL = imageURL;
+        this.city = city;
+        this.address = address;
+        this.price = price;
     }
 
     public Game() {
