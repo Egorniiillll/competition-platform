@@ -6,6 +6,7 @@ import GamePage from "../pages/GamePage.tsx";
 import HomePage from "../pages/HomePage.tsx";
 import CompetitionPage from "../pages/CompetitionPage.tsx";
 import NavBar from "../components/NavBar.tsx";
+import GameDetailsPage from "../pages/GameDetailsPage.tsx";
 
 
 
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/Game" element={<GamePage/>}/>
                 <Route path="/competition" element={<CompetitionPage/>}/>
                 <Route path="/account" element={<AccountPage/>}/>
+                <Route path="/game/:id" element={<GameDetailsPage />} />
             </Routes>
 
         </div>

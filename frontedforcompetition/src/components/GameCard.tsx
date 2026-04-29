@@ -1,6 +1,8 @@
 import "../styles/GameCard.css";
+import { Link } from "react-router-dom";
 
 type GameCardProps = {
+    id: number
     name: string
     description: string
     types: string
@@ -14,6 +16,7 @@ type GameCardProps = {
 }
 
 function GameCard({
+                      id,
                       name,
                       imageURL,
                       description,
@@ -26,23 +29,25 @@ function GameCard({
                       price
                   }: GameCardProps) {
     return (
-        <div className="GameCard">
-            <div className="GameCardImageBlock">
-                {imageURL && <img src={imageURL} alt={name} className="GameImage" />}
-            </div>
+        <Link to={`/game/${id}`} className="GameCardLink">
+            <div className="GameCard">
+                <div className="GameCardImageBlock">
+                    {imageURL && <img src={imageURL} alt={name} className="GameImage" />}
+                </div>
 
-            <div className="GameCardContent">
-                <h2>{name}</h2>
-                <p>description: {description}</p>
-                <p>types: {types}</p>
-                <p>createdAt: {createdAt}</p>
-                <p>city: {city}</p>
-                <p>startDate: {startDate}</p>
-                <p>endDate: {endDate}</p>
-                <p>address: {address}</p>
-                <p>price: {price}</p>
+                <div className="GameCardContent">
+                    <h2>{name}</h2>
+                    <p>description: {description}</p>
+                    <p>types: {types}</p>
+                    <p>createdAt: {createdAt}</p>
+                    <p>city: {city}</p>
+                    <p>startDate: {startDate}</p>
+                    <p>endDate: {endDate}</p>
+                    <p>address: {address}</p>
+                    <p>price: {price}</p>
+                </div>
             </div>
-        </div>
+        </Link>
     )
 }
 

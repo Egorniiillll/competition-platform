@@ -60,6 +60,7 @@ function GamePage() {
                 {filteredGames.map((game) => (
                     <GameCard
                         key={game.id}
+                        id={game.id}
                         imageURL={game.imageURL}
                         name={game.name}
                         description={game.description}
