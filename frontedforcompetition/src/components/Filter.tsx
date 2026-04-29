@@ -1,17 +1,37 @@
+import FilterDropdown from "./FilterDropdown";
+
 type FilterProps = {
     filterType: string
     setFilterType: (value: string) => void
-
+    filterCity: string
+    setFilterCity: (value: string) => void
+    types: string[]
+    cities: string[]
 }
 
-function Filter({filterType, setFilterType}: FilterProps) {
+function Filter({
+                    filterType,
+                    setFilterType,
+                    filterCity,
+                    setFilterCity,
+                    types,
+                    cities
+                }: FilterProps) {
     return (
-        <div>
-            <select value={filterType} onChange={(e) => setFilterType(e.target.value)}>
-                <option value="all">Все</option>
-                <option value="n">футбол</option>
-                <option value="Шахматы">Шахматы</option>
-            </select>
+        <div className="FilterPanel">
+            <FilterDropdown
+                title="Тип"
+                selectedValue={filterType}
+                setSelectedValue={setFilterType}
+                items={types}
+            />
+
+            <FilterDropdown
+                title="Город"
+                selectedValue={filterCity}
+                setSelectedValue={setFilterCity}
+                items={cities}
+            />
         </div>
     )
 }

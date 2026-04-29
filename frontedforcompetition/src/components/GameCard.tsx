@@ -1,7 +1,6 @@
 import "../styles/GameCard.css";
 
 type GameCardProps = {
-
     name: string
     description: string
     types: string
@@ -29,9 +28,9 @@ function GameCard({
     return (
         <div className="GameCard">
             <div className="GameCardImageBlock">
-
-                {imageURL && <img src={imageURL} alt={name} className="GameImage"/>}
+                {imageURL && <img src={imageURL} alt={name} className="GameImage" />}
             </div>
+
             <div className="GameCardContent">
                 <h2>{name}</h2>
                 <p>description: {description}</p>
@@ -42,10 +41,9 @@ function GameCard({
                 <p>endDate: {endDate}</p>
                 <p>address: {address}</p>
                 <p>price: {price}</p>
-
             </div>
         </div>
     )
 }
 
-export default GameCard
+export default GameCard;
