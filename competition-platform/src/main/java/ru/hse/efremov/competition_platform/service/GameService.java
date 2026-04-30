@@ -16,11 +16,11 @@ public class GameService {
         this.gameRepository = gameRepository;
     }
 
-    public void createNewGame(String name, String description, String types,
+    public void createNewGame(String name, String description, String requirement, String types,
                               LocalDateTime createdAt, LocalDateTime startDate,
                               LocalDateTime endDate, String imageURL,
                               String city, String address, BigDecimal price) {
-        Game game = new Game(name, description,
+        Game game = new Game(name, description, requirement,
                 types, createdAt, startDate,
                 endDate, imageURL, city,
                 address, price);
@@ -35,11 +35,11 @@ public class GameService {
         return gameRepository.findAll();
     }
 
-    public Game createNewGameAndRev(String name, String description, String types,
+    public Game createNewGameAndRev(String name, String description, String requirement, String types,
                                     LocalDateTime createdAt, LocalDateTime startDate,
                                     LocalDateTime endDate, String imageURL,
                                     String city, String address, BigDecimal price) {
-        Game game = new Game(name, description,
+        Game game = new Game(name, description, requirement,
                 types, createdAt, startDate,
                 endDate, imageURL, city,
                 address, price);

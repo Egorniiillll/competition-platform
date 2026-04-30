@@ -17,6 +17,7 @@ public class Game {
     private Integer id;
     private String name;
     private String description;
+    private String requirement;
     private String types;
     private LocalDateTime createdAt;
     private LocalDateTime startDate;
@@ -26,12 +27,13 @@ public class Game {
     private String address;
     private BigDecimal price;
 
-    public Game(String name, String description, String types,
+    public Game(String name, String description, String requirement, String types,
                 LocalDateTime createdAt, LocalDateTime startDate,
                 LocalDateTime endDate, String imageURL,
                 String city, String address, BigDecimal price) {
         this.name = name;
         this.description = description;
+        this.requirement= requirement;
         this.types = types;
         this.createdAt = createdAt;
         this.startDate = startDate;

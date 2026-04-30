@@ -25,6 +25,7 @@ public class GameConroller {
     public void createGame(@RequestBody Map<String, String> body) {
         String name = body.get("name");
         String description = body.get("description");
+        String requirement = body.get("requirement");
         String types = body.get("types");
         LocalDateTime createdAt = LocalDateTime.parse(body.get("createdAt"));
         LocalDateTime startDate = LocalDateTime.parse(body.get("startDate"));
@@ -34,7 +35,7 @@ public class GameConroller {
         String address = body.get("address");
         BigDecimal price = new BigDecimal(body.get("price"));
 
-        gameService.createNewGame(name, description,
+        gameService.createNewGame(name, description,requirement,
                 types, createdAt, startDate,
                 endDate, imageURL, city,
                 address, price);

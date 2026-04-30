@@ -34,15 +34,16 @@ public class CompetitionController {
         String location = body.get("location");
         String name = body.get("name");
         String descriptio = body.get("description");
+        String address = body.get("address");
         String types = body.get("types");
         String imageURL = body.get("imageURL");
         String city = body.get("city");
-        String address = body.get("address");
+        String requirement = body.get("requirement");
         BigDecimal price = new BigDecimal(body.get("price"));
         LocalDateTime createdAt = LocalDateTime.parse(body.get("createdAt"));
 
 
-        Game game1 = gameService.createNewGameAndRev(name, descriptio,
+        Game game1 = gameService.createNewGameAndRev(name, descriptio,requirement,
                 types, createdAt, startDate,
                 endDate, imageURL, city,
                 address, price);
