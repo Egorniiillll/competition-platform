@@ -7,6 +7,7 @@ import ru.hse.efremov.competition_platform.service.UserService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:5173")
@@ -30,11 +31,12 @@ public class UserController {
         String personalPhone = body.get("personalPhone");
         User.Gender gender = User.Gender.valueOf(body.get("gender"));
         String city = body.get("city");
+        User.Role role = User.Role.valueOf(body.get("role"));
         double height = Double.parseDouble(body.get("height"));
         double weight = Double.parseDouble(body.get("weight"));
 
 
-        userService.createUser(username, firstName, secondName,
+        userService.createUser(role, username, firstName, secondName,
                 thirdName, email, birthdayDate,
                 dateOfRegistration, personalPhone,
                 gender, city, height, weight);
@@ -43,5 +45,10 @@ public class UserController {
     @GetMapping("/user/{id}")
     public User getUser(@PathVariable Integer id) {
         return userService.getUser(id);
+    }
+
+    @GetMapping("/userAll")
+    public List<User> getAllUser() {
+        return userService.getAllUser();
     }
 }

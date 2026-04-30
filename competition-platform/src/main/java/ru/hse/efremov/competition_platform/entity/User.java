@@ -11,10 +11,13 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "users")
+
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Enumerated(EnumType.STRING)
+    private Role role;
     private String username;
     private String firstName;
     private String secondName;
@@ -36,8 +39,12 @@ public class User {
         MALE,
         FEMALE
     }
+    public enum Role {
+        PARTICIPANT,
+        ORGANIZER
+    }
 
-    public User(String username, String firstName, String secondName,
+    public User(Role role,String username, String firstName, String secondName,
                 String thirdName, String email, LocalDate birthdayDate,
                 LocalDateTime dateOfRegistration, String personalPhone,
                 Gender gender, String city, double height, double weight) {
@@ -53,5 +60,6 @@ public class User {
         this.city = city;
         this.height = height;
         this.weight = weight;
+        this.role = role;
     }
 }
