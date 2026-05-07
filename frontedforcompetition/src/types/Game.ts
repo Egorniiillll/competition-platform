@@ -1,3 +1,5 @@
+import type {User} from "./User.ts";
+
 export type Game = {
     id: number
     name: string
@@ -11,4 +13,5 @@ export type Game = {
     city: string
     address: string
     price: string
+    organizer: User
 }

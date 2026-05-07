@@ -1,12 +1,12 @@
 package ru.hse.efremov.competition_platform.controller;
 
-import jakarta.persistence.Id;
 import org.springframework.web.bind.annotation.*;
 import ru.hse.efremov.competition_platform.entity.Competition;
 import ru.hse.efremov.competition_platform.entity.Game;
-import ru.hse.efremov.competition_platform.repository.GameRepository;
+import ru.hse.efremov.competition_platform.entity.User;
 import ru.hse.efremov.competition_platform.service.CompetitionService;
 import ru.hse.efremov.competition_platform.service.GameService;
+import ru.hse.efremov.competition_platform.service.UserService;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -18,38 +18,75 @@ import java.util.Map;
 public class CompetitionController {
     private final CompetitionService competitionService;
     private final GameService gameService;
+    private final UserService userService;
 
-    public CompetitionController(CompetitionService competitionService, GameService gameService) {
+    public CompetitionController(CompetitionService competitionService,
+                                 GameService gameService,
+                                 UserService userService) {
         this.competitionService = competitionService;
         this.gameService = gameService;
+        this.userService = userService;
     }
 
     @PostMapping("/createCompetition")
     public void createCompetition(@RequestBody Map<String, String> body) {
-
         String title = body.get("title");
         String description = body.get("description");
+        String shortDescription = body.get("shortDescription");
+
+        LocalDateTime createdAt = LocalDateTime.parse(body.get("createdAt"));
         LocalDateTime startDate = LocalDateTime.parse(body.get("startDate"));
         LocalDateTime endDate = LocalDateTime.parse(body.get("endDate"));
-        String location = body.get("location");
-        String name = body.get("name");
-        String descriptio = body.get("description");
-        String address = body.get("address");
-        String types = body.get("types");
+
         String imageURL = body.get("imageURL");
+
         String city = body.get("city");
-        String requirement = body.get("requirement");
-        BigDecimal price = new BigDecimal(body.get("price"));
-        LocalDateTime createdAt = LocalDateTime.parse(body.get("createdAt"));
+        String address = body.get("address");
+        String placeName = body.get("placeName");
 
+        BigDecimal entryFee = new BigDecimal(body.get("entryFee"));
 
-        Game game1 = gameService.createNewGameAndRev(name, descriptio,requirement,
-                types, createdAt, startDate,
-                endDate, imageURL, city,
-                address, price);
+        Integer maxParticipants = Integer.parseInt(body.get("maxParticipants"));
+        Integer currentParticipants = Integer.parseInt(body.get("currentParticipants"));
 
-        competitionService.createNewCompetition(title, description, location, startDate, endDate, game1);
+        String requirements = body.get("requirements");
+        Integer minAge = Integer.parseInt(body.get("minAge"));
+        Integer maxAge = Integer.parseInt(body.get("maxAge"));
 
+        Competition.CompetitionStatus status =
+                Competition.CompetitionStatus.valueOf(body.get("status"));
+
+        Competition.CompetitionFormat format =
+                Competition.CompetitionFormat.valueOf(body.get("format"));
+
+        Integer gameId = Integer.parseInt(body.get("gameId"));
+        Integer organizerId = Integer.parseInt(body.get("organizerId"));
+
+        Game game = gameService.getOneGame(gameId);
+        User organizer = userService.getUser(organizerId);
+
+        competitionService.createNewCompetition(
+                title,
+                description,
+                shortDescription,
+                createdAt,
+                startDate,
+                endDate,
+                imageURL,
+                city,
+                address,
+                placeName,
+                entryFee,
+                maxParticipants,
+                currentParticipants,
+                requirements,
+                minAge,
+                maxAge,
+                status,
+                format,
+                game,
+                organizer
+        );
     }
 
     @GetMapping("/getAllCompetitions")
@@ -60,8 +97,5 @@ public class CompetitionController {
     @GetMapping("/getOneCompetition/{id}")
     public Competition getOneCompetition(@PathVariable Integer id) {
         return competitionService.getOneCompetition(id);
-
     }
-
-
 }

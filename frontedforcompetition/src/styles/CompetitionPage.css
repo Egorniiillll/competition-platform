@@ -1,0 +1,72 @@
+.CompetitionPage {
+    padding: 24px;
+}
+
+.CompetitionPageTitle {
+    margin-bottom: 20px;
+}
+
+.CompetitionList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.FilterPanel {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+}
+
+.Dropdown {
+    position: relative;
+    width: 220px;
+}
+
+.DropdownLabel {
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.DropdownButton {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    background-color: white;
+    text-align: left;
+    font-size: 14px;
+    cursor: pointer;
+    color: #111827;
+}
+
+.DropdownMenu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    z-index: 20;
+}
+
+.DropdownItem {
+    width: 100%;
+    padding: 12px 14px;
+    border: none;
+    background-color: white;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    color: #111827;
+}
+
+.DropdownItem:hover {
+    background-color: #f1f5f9;
+}

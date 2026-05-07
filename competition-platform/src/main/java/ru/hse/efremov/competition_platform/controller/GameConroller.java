@@ -3,7 +3,9 @@ package ru.hse.efremov.competition_platform.controller;
 
 import org.springframework.web.bind.annotation.*;
 import ru.hse.efremov.competition_platform.entity.Game;
+import ru.hse.efremov.competition_platform.entity.User;
 import ru.hse.efremov.competition_platform.service.GameService;
+import ru.hse.efremov.competition_platform.service.UserService;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,9 +17,11 @@ import java.util.Map;
 public class GameConroller {
 
     private final GameService gameService;
+    private final UserService userService;
 
-    public GameConroller(GameService gameService) {
+    public GameConroller(GameService gameService, UserService userService) {
         this.gameService = gameService;
+        this.userService = userService;
     }
 
 
@@ -34,17 +38,24 @@ public class GameConroller {
         String city = body.get("city");
         String address = body.get("address");
         BigDecimal price = new BigDecimal(body.get("price"));
+        Integer organizerId = Integer.parseInt(body.get("organizerId"));
+        User organizer = userService.getUser(organizerId);
 
-        gameService.createNewGame(name, description,requirement,
+        gameService.createNewGame(name, description, requirement,
                 types, createdAt, startDate,
                 endDate, imageURL, city,
-                address, price);
+                address, price, organizer);
 
     }
 
     @GetMapping("/getOneGame/{id}")
     public Game getOneGame(@PathVariable Integer id) {
         return gameService.getOneGame(id);
+    }
+
+    @GetMapping("/getGamesByOrganaizerId/{id}")
+    public List<Game> getGamesByOrganaizerId(@PathVariable Integer id) {
+        return gameService.getGamesByOrganizer(id);
     }
 
     @GetMapping("/getAllGames")

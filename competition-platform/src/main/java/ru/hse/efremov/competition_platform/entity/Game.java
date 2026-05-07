@@ -17,6 +17,7 @@ public class Game {
     private Integer id;
     private String name;
     private String description;
+    private String shortDescription;
     private String requirement;
     private String types;
     private LocalDateTime createdAt;
@@ -26,11 +27,25 @@ public class Game {
     private String city;
     private String address;
     private BigDecimal price;
+    @Enumerated(EnumType.STRING)
+    private GameStatus status;
+    private Integer maxParticipants;
+    private Integer currentParticipants;
+    @ManyToOne
+    @JoinColumn(name = "organizer_id")
+    private  User organizer;
+
+    public enum GameStatus {
+        OPEN,
+        CLOSED,
+        FINISHED,
+        CANCELLED
+    }
 
     public Game(String name, String description, String requirement, String types,
                 LocalDateTime createdAt, LocalDateTime startDate,
                 LocalDateTime endDate, String imageURL,
-                String city, String address, BigDecimal price) {
+                String city, String address, BigDecimal price,User organizer) {
         this.name = name;
         this.description = description;
         this.requirement= requirement;
@@ -42,6 +57,7 @@ public class Game {
         this.city = city;
         this.address = address;
         this.price = price;
+        this.organizer = organizer;
     }
 
     public Game() {
