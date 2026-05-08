@@ -7,7 +7,8 @@ import {
 } from "../api/gameApplicationApi.ts";
 import {
     getCompetitionApplicationsByUser,
-    getCompetitionApplicationsByOrganizer
+    getCompetitionApplicationsByOrganizer,
+    updateCompetitionApplicationStatus
 } from "../api/competitionApplicationApi.ts";
 import type { User } from "../types/User.ts";
 import type { GameApplication } from "../types/GameApplication.ts";
@@ -85,6 +86,21 @@ function MyEventsPage() {
             setOrganizerGameApplications(updatedApplications)
         } catch {
             setError("Ошибка обновления статуса заявки")
+        }
+    }
+    async function handleUpdateCompetitionApplicationStatus(applicationId: number, status: string) {
+        try {
+            await updateCompetitionApplicationStatus(applicationId, status)
+
+            const currentUserId = localStorage.getItem("currentUserId")
+            if (!currentUserId) {
+                return
+            }
+
+            const updatedApplications = await getCompetitionApplicationsByOrganizer(Number(currentUserId))
+            setOrganizerCompetitionApplications(updatedApplications)
+        } catch {
+            setError("Ошибка обновления статуса заявки на соревнование")
         }
     }
 
@@ -203,8 +219,12 @@ function MyEventsPage() {
                                 <p>Статус: {application.status}</p>
                                 <p>Дата заявки: {application.createdAt}</p>
 
-                                <button>Подтвердить</button>
-                                <button>Отклонить</button>
+                                <button onClick={() => handleUpdateCompetitionApplicationStatus(application.id, "APPROVED")}>
+                                    подтвердить
+                                </button>
+                                <button onClick={() => handleUpdateCompetitionApplicationStatus(application.id, "REJECTED")}>
+                                    отклонить
+                                </button>
                             </div>
                         ))
                     )}

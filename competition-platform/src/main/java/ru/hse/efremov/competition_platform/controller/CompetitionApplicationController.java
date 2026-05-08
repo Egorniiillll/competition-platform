@@ -50,6 +50,11 @@ public class CompetitionApplicationController {
     @GetMapping("/getCompetitionApplicationsByOrganizer/{organizerId}")
     public List<CompetitionApplication> getCompetitionApplicationsByOrganizer(@PathVariable Integer organizerId) {
         return competitionApplicationService.getApplicationsByOrganizerId(organizerId);
+    }
 
+    @PatchMapping("/updateCompetitionApplicationStatus/{id}")
+    public void updateCompetitionApplicationStatus(@PathVariable Integer id, @RequestBody Map<String, String> body) {
+        CompetitionApplication.ApplicationStatus status = CompetitionApplication.ApplicationStatus.valueOf(body.get("status").trim().toUpperCase());
+        competitionApplicationService.updateApplicationStatus(id, status);
     }
 }

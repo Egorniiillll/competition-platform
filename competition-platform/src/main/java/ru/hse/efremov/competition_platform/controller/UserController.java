@@ -51,4 +51,26 @@ public class UserController {
     public List<User> getAllUser() {
         return userService.getAllUser();
     }
+
+    @PatchMapping("/user/{id}")
+
+    public User updateUser(@PathVariable Integer id,
+
+                           @RequestBody Map<String, String> body) {
+
+        return userService.updateUser(
+                id,
+                body.get("username"),
+                body.get("firstName"),
+                body.get("secondName"),
+                body.get("thirdName"),
+                body.get("email"),
+                LocalDate.parse(body.get("birthdayDate")),
+                body.get("personalPhone"),
+                User.Gender.valueOf(body.get("gender").trim().toUpperCase()),
+                body.get("city"),
+                Double.parseDouble(body.get("height")),
+                Double.parseDouble(body.get("weight"))
+        );
+    }
 }

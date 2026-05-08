@@ -36,8 +36,12 @@ public class CompetitionApplicationService {
         return competitionApplicationRepository.findByCompetitionId(competitionId);
     }
     public List<CompetitionApplication> getApplicationsByOrganizerId(Integer organizerId) {
-
         return competitionApplicationRepository.findByCompetitionOrganizerId(organizerId);
+    }
 
+    public void updateApplicationStatus(Integer applicationId, CompetitionApplication.ApplicationStatus status) {
+        CompetitionApplication application = competitionApplicationRepository.findById(applicationId).orElseThrow();
+        application.setStatus(status);
+        competitionApplicationRepository.save(application);
     }
 }

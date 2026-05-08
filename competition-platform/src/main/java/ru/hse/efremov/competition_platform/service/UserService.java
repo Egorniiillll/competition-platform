@@ -40,5 +40,30 @@ public class UserService {
     public List<User> getAllUser() {
         return userRepository.findAll();
     }
-
+    public User updateUser(Integer id,
+                           String username,
+                           String firstName,
+                           String secondName,
+                           String thirdName,
+                           String email,
+                           LocalDate birthdayDate,
+                           String personalPhone,
+                           User.Gender gender,
+                           String city,
+                           double height,
+                           double weight) {
+        User user = userRepository.findById(id).orElseThrow();
+        user.setUsername(username);
+        user.setFirstName(firstName);
+        user.setSecondName(secondName);
+        user.setThirdName(thirdName);
+        user.setEmail(email);
+        user.setBirthdayDate(birthdayDate);
+        user.setPersonalPhone(personalPhone);
+        user.setGender(gender);
+        user.setCity(city);
+        user.setHeight(height);
+        user.setWeight(weight);
+        return userRepository.save(user);
+    }
 }
