@@ -52,5 +52,9 @@ public class CompetitionService {
     public List<Competition> getAllCompetitions() {
         return competitionRepository.findAll();
     }
+
+    public List<Competition> getCompetitionsByOrganizer(Integer id) {
+        return competitionRepository.findByOrganizerId(id);
+    }
 }
 

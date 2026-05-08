@@ -22,15 +22,15 @@ function CreateCompetitionForm() {
     const [status, setStatus] = useState("")
     const [format, setFormat] = useState("")
     const [gameId, setGameId] = useState("")
-    const [organizerId, setOrganizerId] = useState("")
     const [error, setError] = useState("")
+
 
     const navigate = useNavigate()
 
     async function handleCreateCompetition() {
         try {
             setError("")
-
+            const organizerId = localStorage.getItem("currentUserId")
             await createCompetition({
                 title,
                 description,
@@ -50,8 +50,8 @@ function CreateCompetitionForm() {
                 maxAge,
                 status,
                 format,
-                gameId,
-                organizerId
+                gameId: Number(gameId),
+                organizerId: Number(organizerId)
             })
 
             navigate("/competition")
@@ -176,12 +176,6 @@ function CreateCompetitionForm() {
                 placeholder="ID игры"
                 value={gameId}
                 onChange={(e) => setGameId(e.target.value)}
-            />
-
-            <input
-                placeholder="ID организатора"
-                value={organizerId}
-                onChange={(e) => setOrganizerId(e.target.value)}
             />
 
             <button onClick={handleCreateCompetition}>

@@ -54,10 +54,10 @@ public class CompetitionController {
         Integer maxAge = Integer.parseInt(body.get("maxAge"));
 
         Competition.CompetitionStatus status =
-                Competition.CompetitionStatus.valueOf(body.get("status"));
+                Competition.CompetitionStatus.valueOf(body.get("status").trim().toUpperCase());
 
         Competition.CompetitionFormat format =
-                Competition.CompetitionFormat.valueOf(body.get("format"));
+                Competition.CompetitionFormat.valueOf(body.get("format").trim().toUpperCase());
 
         Integer gameId = Integer.parseInt(body.get("gameId"));
         Integer organizerId = Integer.parseInt(body.get("organizerId"));
@@ -97,5 +97,10 @@ public class CompetitionController {
     @GetMapping("/getOneCompetition/{id}")
     public Competition getOneCompetition(@PathVariable Integer id) {
         return competitionService.getOneCompetition(id);
+    }
+
+    @GetMapping("/getCompetitionsByOrganaizerId/{id}")
+    public List<Competition> getCompetitionsByOrganaizerId(@PathVariable Integer id) {
+        return competitionService.getCompetitionsByOrganizer(id);
     }
 }

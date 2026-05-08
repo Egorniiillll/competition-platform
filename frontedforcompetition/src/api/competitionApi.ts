@@ -1,6 +1,7 @@
 import type {Competition} from "../types/Competition.ts";
 
 
+
 export async function getAllCompetitions(): Promise<Competition[]>{
     const response = await fetch('http://localhost:8080/getAllCompetitions')
     if(!response.ok){
@@ -40,8 +41,8 @@ export async function createCompetition(competition: {
     maxAge: string
     status: string
     format: string
-    gameId: string
-    organizerId: string
+    gameId: number
+    organizerId: number
 }): Promise<void> {
     const response = await fetch("http://localhost:8080/createCompetition", {
         method: "POST",
@@ -54,4 +55,12 @@ export async function createCompetition(competition: {
     if (!response.ok) {
         throw new Error("Не удалось создать соревнование")
     }
+}
+
+export async function getCompetitionsByOrganizer(id: number): Promise<Competition[]> {
+    const response = await fetch(`http://localhost:8080/getCompetitionsByOrganaizerId/${id}`)
+    if (!response.ok) {
+        throw new Error("не удалось загрузить соревнования организатора")
+    }
+    return response.json()
 }

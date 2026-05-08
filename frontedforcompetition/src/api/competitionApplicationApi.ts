@@ -26,3 +26,12 @@ export async function getCompetitionApplicationsByUser(userId: number): Promise<
 
     return response.json()
 }
+export async function getCompetitionApplicationsByOrganizer(organizerId: number): Promise<CompetitionApplication[]> {
+    const response = await fetch(`http://localhost:8080/getCompetitionApplicationsByOrganizer/${organizerId}`)
+
+    if (!response.ok) {
+        throw new Error("е удалось загрузить на соревнования орг")
+    }
+
+    return response.json()
+}

@@ -14,40 +14,29 @@ public class Competition {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String title;
     private String description;
     private String shortDescription;
-
     private LocalDateTime createdAt;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-
     private String imageURL;
-
     private String city;
     private String address;
     private String placeName;
-
     private BigDecimal entryFee;
-
     private Integer maxParticipants;
     private Integer currentParticipants;
-
     private String requirements;
     private Integer minAge;
     private Integer maxAge;
-
     @Enumerated(EnumType.STRING)
     private CompetitionStatus status;
-
     @Enumerated(EnumType.STRING)
     private CompetitionFormat format;
-
     @ManyToOne
     @JoinColumn(name = "game_id")
     private Game game;
-
     @ManyToOne
     @JoinColumn(name = "organizer_id")
     private User organizer;

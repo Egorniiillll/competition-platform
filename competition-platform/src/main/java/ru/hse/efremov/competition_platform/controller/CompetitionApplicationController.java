@@ -46,4 +46,10 @@ public class CompetitionApplicationController {
     public List<CompetitionApplication> getCompetitionApplicationsByCompetition(@PathVariable Integer competitionId) {
         return competitionApplicationService.getApplicationsByCompetitionId(competitionId);
     }
+
+    @GetMapping("/getCompetitionApplicationsByOrganizer/{organizerId}")
+    public List<CompetitionApplication> getCompetitionApplicationsByOrganizer(@PathVariable Integer organizerId) {
+        return competitionApplicationService.getApplicationsByOrganizerId(organizerId);
+
+    }
 }

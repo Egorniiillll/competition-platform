@@ -35,4 +35,9 @@ public class CompetitionApplicationService {
     public List<CompetitionApplication> getApplicationsByCompetitionId(Integer competitionId) {
         return competitionApplicationRepository.findByCompetitionId(competitionId);
     }
+    public List<CompetitionApplication> getApplicationsByOrganizerId(Integer organizerId) {
+
+        return competitionApplicationRepository.findByCompetitionOrganizerId(organizerId);
+
+    }
 }

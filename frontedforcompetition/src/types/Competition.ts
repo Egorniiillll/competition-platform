@@ -1,3 +1,5 @@
+import type {User} from "./User.ts";
+
 export type Competition = {
     id: number
     title: string
@@ -20,4 +22,5 @@ export type Competition = {
     status: string
     format: string
     price:string
+    organizer: User
 }
