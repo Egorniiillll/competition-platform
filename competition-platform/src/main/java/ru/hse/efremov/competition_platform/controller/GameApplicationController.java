@@ -58,4 +58,6 @@ public class GameApplicationController {
         GameApplication.ApplicationStatus status =  GameApplication.ApplicationStatus.valueOf(body.get("status"));
         gameApplicationService.updateApplicationStatus(id, status);
     }
+
+
 }

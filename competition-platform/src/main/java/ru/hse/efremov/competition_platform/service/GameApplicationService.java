@@ -46,4 +46,8 @@ public class GameApplicationService {
         application.setStatus(status);
         gameApplicationRepository.save(application);
     }
+
+
+
+
 }

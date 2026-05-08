@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { getUser } from "../api/userApi.ts";
 import {
     getGameApplicationsByUser,
-    getGameApplicationsByOrganizer
+    getGameApplicationsByOrganizer,
+    updateGameApplicationStatus
 } from "../api/gameApplicationApi.ts";
 import {
     getCompetitionApplicationsByUser,
@@ -70,6 +71,22 @@ function MyEventsPage() {
                 setLoading(false)
             })
     }, [currentUserId])
+
+    async function handleUpdateGameApplicationStatus(applicationId: number, status: string) {
+        try {
+            await updateGameApplicationStatus(applicationId, status)
+
+            const currentUserId = localStorage.getItem("currentUserId")
+            if (!currentUserId) {
+                return
+            }
+
+            const updatedApplications = await getGameApplicationsByOrganizer(Number(currentUserId))
+            setOrganizerGameApplications(updatedApplications)
+        } catch {
+            setError("Ошибка обновления статуса заявки")
+        }
+    }
 
     if (!currentUserId) {
         return <h1>Пользователь не выбран</h1>
@@ -149,8 +166,13 @@ function MyEventsPage() {
                                 <p>Статус: {application.status}</p>
                                 <p>Дата заявки: {application.createdAt}</p>
 
-                                <button>Подтвердить</button>
-                                <button>Отклонить</button>
+                                <button onClick={() => handleUpdateGameApplicationStatus(application.id, "APPROVED")}>
+                                    Подтвердить
+                                </button>
+
+                                <button onClick={() => handleUpdateGameApplicationStatus(application.id, "REJECTED")}>
+                                    Отклонить
+                                </button>
                             </div>
                         ))
                     )}
