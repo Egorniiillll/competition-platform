@@ -7,4 +7,6 @@ export type CompetitionApplication = {
     competition: Competition
     createdAt: string
     status: string
+    paymentStatus: string
+    paymentProof: string | null
 }

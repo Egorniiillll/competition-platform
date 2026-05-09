@@ -53,8 +53,26 @@ public class CompetitionApplicationController {
     }
 
     @PatchMapping("/updateCompetitionApplicationStatus/{id}")
-    public void updateCompetitionApplicationStatus(@PathVariable Integer id, @RequestBody Map<String, String> body) {
-        CompetitionApplication.ApplicationStatus status = CompetitionApplication.ApplicationStatus.valueOf(body.get("status").trim().toUpperCase());
+    public void updateCompetitionApplicationStatus(@PathVariable Integer id,
+                                                   @RequestBody Map<String, String> body) {
+        CompetitionApplication.ApplicationStatus status =
+                CompetitionApplication.ApplicationStatus.valueOf(body.get("status").trim().toUpperCase());
+
         competitionApplicationService.updateApplicationStatus(id, status);
+    }
+
+    @PatchMapping("/markCompetitionApplicationAsPaid/{id}")
+    public void markCompetitionApplicationAsPaid(@PathVariable Integer id,
+                                                 @RequestBody Map<String, String> body) {
+        competitionApplicationService.markAsPaidByUser(id, body.get("paymentProof"));
+    }
+
+    @PatchMapping("/updateCompetitionPaymentStatus/{id}")
+    public void updateCompetitionPaymentStatus(@PathVariable Integer id,
+                                               @RequestBody Map<String, String> body) {
+        CompetitionApplication.PaymentStatus paymentStatus =
+                CompetitionApplication.PaymentStatus.valueOf(body.get("paymentStatus").trim().toUpperCase());
+
+        competitionApplicationService.updatePaymentStatus(id, paymentStatus);
     }
 }

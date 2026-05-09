@@ -23,7 +23,9 @@ public class GameApplicationService {
                 user,
                 game,
                 LocalDateTime.now(),
-                GameApplication.ApplicationStatus.PENDING
+                GameApplication.ApplicationStatus.PENDING,
+                GameApplication.PaymentStatus.NOT_REQUIRED,
+                null
         );
 
         gameApplicationRepository.save(gameApplication);
@@ -44,10 +46,27 @@ public class GameApplicationService {
     public void updateApplicationStatus(Integer applicationId, GameApplication.ApplicationStatus status) {
         GameApplication application = gameApplicationRepository.findById(applicationId).orElseThrow();
         application.setStatus(status);
+        if (status == GameApplication.ApplicationStatus.APPROVED) {
+            application.setPaymentStatus(GameApplication.PaymentStatus.WAITING_FOR_PAYMENT);
+        }
+        if (status == GameApplication.ApplicationStatus.REJECTED) {
+            application.setPaymentStatus(GameApplication.PaymentStatus.NOT_REQUIRED);
+            application.setPaymentProof(null);
+        }
+
+        gameApplicationRepository.save(application);
+    }
+    public void markAsPaidByUser(Integer applicationId, String paymentProof) {
+        GameApplication application = gameApplicationRepository.findById(applicationId).orElseThrow();
+        application.setPaymentStatus(GameApplication.PaymentStatus.CHECKING);
+        application.setPaymentProof(paymentProof);
         gameApplicationRepository.save(application);
     }
 
-
-
+    public void updatePaymentStatus(Integer applicationId, GameApplication.PaymentStatus paymentStatus) {
+        GameApplication application = gameApplicationRepository.findById(applicationId).orElseThrow();
+        application.setPaymentStatus(paymentStatus);
+        gameApplicationRepository.save(application);
+    }
 
 }

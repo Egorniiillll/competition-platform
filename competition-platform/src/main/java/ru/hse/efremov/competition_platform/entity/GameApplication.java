@@ -13,19 +13,18 @@ public class GameApplication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
     @ManyToOne
     @JoinColumn(name = "game_id")
     private Game game;
-
     private LocalDateTime createdAt;
-
     @Enumerated(EnumType.STRING)
     private ApplicationStatus status;
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus paymentStatus;
+    private String paymentProof;
 
     public enum ApplicationStatus {
         PENDING,
@@ -33,13 +32,27 @@ public class GameApplication {
         REJECTED
     }
 
-    public GameApplication(User user, Game game, LocalDateTime createdAt, ApplicationStatus status) {
+    public enum PaymentStatus {
+        NOT_REQUIRED,
+        WAITING_FOR_PAYMENT,
+        CHECKING,
+        PAID,
+        REJECTED
+    }
+
+    public GameApplication(User user,
+                           Game game,
+                           LocalDateTime createdAt,
+                           ApplicationStatus status,
+                           PaymentStatus paymentStatus,
+                           String paymentProof) {
         this.user = user;
         this.game = game;
         this.createdAt = createdAt;
         this.status = status;
+        this.paymentStatus = paymentStatus;
+        this.paymentProof = paymentProof;
     }
-
     public GameApplication() {
     }
 }

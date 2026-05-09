@@ -52,3 +52,35 @@ export async function updateGameApplicationStatus(
         throw new Error("заявки не обновиось ")
     }
 }
+
+export async function markGameApplicationAsPaid(
+    applicationId: number,
+    paymentProof: string
+): Promise<void> {
+    const response = await fetch(`http://localhost:8080/markGameApplicationAsPaid/${applicationId}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ paymentProof })
+    })
+    if (!response.ok) {
+        throw new Error("Не удалось отправить подтверждение оплаты")
+    }
+}
+
+export async function updateGamePaymentStatus(
+    applicationId: number,
+    paymentStatus: string
+): Promise<void> {
+    const response = await fetch(`http://localhost:8080/updateGamePaymentStatus/${applicationId}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ paymentStatus })
+    })
+    if (!response.ok) {
+        throw new Error("Не удалось обновить статус оплаты")
+    }
+}

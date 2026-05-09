@@ -3,12 +3,16 @@ import { getUser } from "../api/userApi.ts";
 import {
     getGameApplicationsByUser,
     getGameApplicationsByOrganizer,
-    updateGameApplicationStatus
+    updateGameApplicationStatus,
+    markGameApplicationAsPaid,
+    updateGamePaymentStatus
 } from "../api/gameApplicationApi.ts";
 import {
     getCompetitionApplicationsByUser,
     getCompetitionApplicationsByOrganizer,
-    updateCompetitionApplicationStatus
+    updateCompetitionApplicationStatus,
+    markCompetitionApplicationAsPaid,
+    updateCompetitionPaymentStatus
 } from "../api/competitionApplicationApi.ts";
 import type { User } from "../types/User.ts";
 import type { GameApplication } from "../types/GameApplication.ts";
@@ -28,6 +32,8 @@ function MyEventsPage() {
     const [organizerGameApplications, setOrganizerGameApplications] = useState<GameApplication[]>([])
     const [organizerCompetitions, setOrganizerCompetitions] = useState<Competition[]>([])
     const [organizerCompetitionApplications, setOrganizerCompetitionApplications] = useState<CompetitionApplication[]>([])
+    const [gamePaymentProofs, setGamePaymentProofs] = useState<Record<number, string>>({})
+    const [competitionPaymentProofs, setCompetitionPaymentProofs] = useState<Record<number, string>>({})
 
     const currentUserId = localStorage.getItem("currentUserId")
 
@@ -73,6 +79,54 @@ function MyEventsPage() {
             })
     }, [currentUserId])
 
+    async function handleMarkGameAsPaid(applicationId: number) {
+        try {
+            const paymentProof = gamePaymentProofs[applicationId]?.trim()
+
+            if (!paymentProof) {
+                setError("Введите ссылку на подтверждение оплаты")
+                return
+            }
+
+            await markGameApplicationAsPaid(applicationId, paymentProof)
+
+            const currentUserId = localStorage.getItem("currentUserId")
+            if (!currentUserId) {
+                return
+            }
+
+            const updatedApplications = await getGameApplicationsByUser(Number(currentUserId))
+            setGameApplications(updatedApplications)
+            setError("")
+        } catch {
+            setError("Ошибка подтверждения оплаты игры")
+        }
+    }
+
+    async function handleMarkCompetitionAsPaid(applicationId: number) {
+        try {
+            const paymentProof = competitionPaymentProofs[applicationId]?.trim()
+
+            if (!paymentProof) {
+                setError("Введите ссылку на подтверждение оплаты")
+                return
+            }
+
+            await markCompetitionApplicationAsPaid(applicationId, paymentProof)
+
+            const currentUserId = localStorage.getItem("currentUserId")
+            if (!currentUserId) {
+                return
+            }
+
+            const updatedApplications = await getCompetitionApplicationsByUser(Number(currentUserId))
+            setCompetitionApplications(updatedApplications)
+            setError("")
+        } catch {
+            setError("Ошибка подтверждения оплаты соревнования")
+        }
+    }
+
     async function handleUpdateGameApplicationStatus(applicationId: number, status: string) {
         try {
             await updateGameApplicationStatus(applicationId, status)
@@ -85,9 +139,10 @@ function MyEventsPage() {
             const updatedApplications = await getGameApplicationsByOrganizer(Number(currentUserId))
             setOrganizerGameApplications(updatedApplications)
         } catch {
-            setError("Ошибка обновления статуса заявки")
+            setError("Ошибка обновления статуса заявки на игру")
         }
     }
+
     async function handleUpdateCompetitionApplicationStatus(applicationId: number, status: string) {
         try {
             await updateCompetitionApplicationStatus(applicationId, status)
@@ -101,6 +156,38 @@ function MyEventsPage() {
             setOrganizerCompetitionApplications(updatedApplications)
         } catch {
             setError("Ошибка обновления статуса заявки на соревнование")
+        }
+    }
+
+    async function handleUpdateGamePaymentStatus(applicationId: number, paymentStatus: string) {
+        try {
+            await updateGamePaymentStatus(applicationId, paymentStatus)
+
+            const currentUserId = localStorage.getItem("currentUserId")
+            if (!currentUserId) {
+                return
+            }
+
+            const updatedApplications = await getGameApplicationsByOrganizer(Number(currentUserId))
+            setOrganizerGameApplications(updatedApplications)
+        } catch {
+            setError("Ошибка обновления оплаты игры")
+        }
+    }
+
+    async function handleUpdateCompetitionPaymentStatus(applicationId: number, paymentStatus: string) {
+        try {
+            await updateCompetitionPaymentStatus(applicationId, paymentStatus)
+
+            const currentUserId = localStorage.getItem("currentUserId")
+            if (!currentUserId) {
+                return
+            }
+
+            const updatedApplications = await getCompetitionApplicationsByOrganizer(Number(currentUserId))
+            setOrganizerCompetitionApplications(updatedApplications)
+        } catch {
+            setError("Ошибка обновления оплаты соревнования")
         }
     }
 
@@ -131,8 +218,31 @@ function MyEventsPage() {
                                 <h3>{application.game.name}</h3>
                                 <p>Город: {application.game.city}</p>
                                 <p>Адрес: {application.game.address}</p>
-                                <p>Статус: {application.status}</p>
+                                <p>Статус заявки: {application.status}</p>
+                                <p>Статус оплаты: {application.paymentStatus}</p>
+                                <p>Ссылка на оплату: {application.paymentProof || "не указана"}</p>
                                 <p>Дата заявки: {application.createdAt}</p>
+
+                                {application.status === "APPROVED" && application.paymentStatus === "WAITING_FOR_PAYMENT" && (
+                                    <div>
+                                        <p><strong>Инструкция по оплате:</strong> переведите взнос по номеру +7 999 123-45-67</p>
+
+                                        <input
+                                            placeholder="Вставьте ссылку на подтверждение оплаты"
+                                            value={gamePaymentProofs[application.id] || ""}
+                                            onChange={(e) =>
+                                                setGamePaymentProofs((prev) => ({
+                                                    ...prev,
+                                                    [application.id]: e.target.value
+                                                }))
+                                            }
+                                        />
+
+                                        <button onClick={() => handleMarkGameAsPaid(application.id)}>
+                                            Я оплатил
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         ))
                     )}
@@ -146,8 +256,31 @@ function MyEventsPage() {
                                 <h3>{application.competition.title}</h3>
                                 <p>Город: {application.competition.city}</p>
                                 <p>Адрес: {application.competition.address}</p>
-                                <p>Статус: {application.status}</p>
+                                <p>Статус заявки: {application.status}</p>
+                                <p>Статус оплаты: {application.paymentStatus}</p>
+                                <p>Ссылка на оплату: {application.paymentProof || "не указана"}</p>
                                 <p>Дата заявки: {application.createdAt}</p>
+
+                                {application.status === "APPROVED" && application.paymentStatus === "WAITING_FOR_PAYMENT" && (
+                                    <div>
+                                        <p><strong>Инструкция по оплате:</strong> переведите взнос по номеру +7 999 123-45-67</p>
+
+                                        <input
+                                            placeholder="Вставьте ссылку на подтверждение оплаты"
+                                            value={competitionPaymentProofs[application.id] || ""}
+                                            onChange={(e) =>
+                                                setCompetitionPaymentProofs((prev) => ({
+                                                    ...prev,
+                                                    [application.id]: e.target.value
+                                                }))
+                                            }
+                                        />
+
+                                        <button onClick={() => handleMarkCompetitionAsPaid(application.id)}>
+                                            Я оплатил
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         ))
                     )}
@@ -179,16 +312,30 @@ function MyEventsPage() {
                             <div key={application.id}>
                                 <h3>{application.game.name}</h3>
                                 <p>Пользователь: {application.user.username}</p>
-                                <p>Статус: {application.status}</p>
+                                <p>Статус заявки: {application.status}</p>
+                                <p>Статус оплаты: {application.paymentStatus}</p>
+                                <p>Ссылка на оплату: {application.paymentProof || "не указана"}</p>
                                 <p>Дата заявки: {application.createdAt}</p>
 
                                 <button onClick={() => handleUpdateGameApplicationStatus(application.id, "APPROVED")}>
-                                    Подтвердить
+                                    Подтвердить заявку
                                 </button>
 
                                 <button onClick={() => handleUpdateGameApplicationStatus(application.id, "REJECTED")}>
-                                    Отклонить
+                                    Отклонить заявку
                                 </button>
+
+                                {application.paymentStatus === "CHECKING" && (
+                                    <div>
+                                        <button onClick={() => handleUpdateGamePaymentStatus(application.id, "PAID")}>
+                                            Подтвердить оплату
+                                        </button>
+
+                                        <button onClick={() => handleUpdateGamePaymentStatus(application.id, "REJECTED")}>
+                                            Отклонить оплату
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         ))
                     )}
@@ -216,15 +363,30 @@ function MyEventsPage() {
                             <div key={application.id}>
                                 <h3>{application.competition.title}</h3>
                                 <p>Пользователь: {application.user.username}</p>
-                                <p>Статус: {application.status}</p>
+                                <p>Статус заявки: {application.status}</p>
+                                <p>Статус оплаты: {application.paymentStatus}</p>
+                                <p>Ссылка на оплату: {application.paymentProof || "не указана"}</p>
                                 <p>Дата заявки: {application.createdAt}</p>
 
                                 <button onClick={() => handleUpdateCompetitionApplicationStatus(application.id, "APPROVED")}>
-                                    подтвердить
+                                    Подтвердить заявку
                                 </button>
+
                                 <button onClick={() => handleUpdateCompetitionApplicationStatus(application.id, "REJECTED")}>
-                                    отклонить
+                                    Отклонить заявку
                                 </button>
+
+                                {application.paymentStatus === "CHECKING" && (
+                                    <div>
+                                        <button onClick={() => handleUpdateCompetitionPaymentStatus(application.id, "PAID")}>
+                                            Подтвердить оплату
+                                        </button>
+
+                                        <button onClick={() => handleUpdateCompetitionPaymentStatus(application.id, "REJECTED")}>
+                                            Отклонить оплату
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         ))
                     )}
@@ -234,4 +396,4 @@ function MyEventsPage() {
     )
 }
 
-export default MyEventsPage;
+export default MyEventsPage

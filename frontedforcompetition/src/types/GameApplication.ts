@@ -1,5 +1,5 @@
-import type { Game } from "./Game.ts";
-import type { User } from "./User.ts";
+import type { User } from "./User.ts"
+import type { Game } from "./Game.ts"
 
 export type GameApplication = {
     id: number
@@ -7,4 +7,6 @@ export type GameApplication = {
     game: Game
     createdAt: string
     status: string
+    paymentStatus: string
+    paymentProof: string | null
 }
