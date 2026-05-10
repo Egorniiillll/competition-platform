@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getUser, updateUser } from "../api/userApi";
 import type { User } from "../types/User";
+import "../styles/AccountPage.css";
 
 function AccountPage() {
     const [user, setUser] = useState<User | null>(null)
@@ -22,22 +23,27 @@ function AccountPage() {
     useEffect(() => {
         const currentUserId = localStorage.getItem("currentUserId")
 
-
+        if (!currentUserId) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
+            setError("Пользователь не выбран")
+            setLoading(false)
+            return
+        }
 
         getUser(Number(currentUserId))
             .then((data) => {
                 setUser(data)
-                setUsername(data.username)
-                setFirstName(data.firstName)
-                setSecondName(data.secondName)
-                setThirdName(data.thirdName)
-                setEmail(data.email)
-                setBirthdayDate(data.birthdayDate)
-                setPersonalPhone(data.personalPhone)
-                setGender(data.gender)
-                setCity(data.city)
-                setHeight(String(data.height))
-                setWeight(String(data.weight))
+                setUsername(data.username || "")
+                setFirstName(data.firstName || "")
+                setSecondName(data.secondName || "")
+                setThirdName(data.thirdName || "")
+                setEmail(data.email || "")
+                setBirthdayDate(data.birthdayDate || "")
+                setPersonalPhone(data.personalPhone || "")
+                setGender(data.gender || "")
+                setCity(data.city || "")
+                setHeight(String(data.height ?? ""))
+                setWeight(String(data.weight ?? ""))
                 setLoading(false)
             })
             .catch(() => {
@@ -50,9 +56,11 @@ function AccountPage() {
         try {
             setError("")
             setMessage("")
+
             if (!user) {
                 return
             }
+
             const updatedUser = await updateUser(user.id, {
                 username,
                 firstName,
@@ -66,95 +74,153 @@ function AccountPage() {
                 height: Number(height),
                 weight: Number(weight)
             })
+
             setUser(updatedUser)
-            setMessage("данные обновлены")
+            setMessage("Данные обновлены")
         } catch {
-            setError("ошибка обновлления ")
+            setError("Ошибка обновления")
         }
     }
 
     if (loading) {
-        return <h1>Загрузка...</h1>
+        return <h1 className="AccountPageLoading">Загрузка...</h1>
     }
+
     if (error && !user) {
-        return <h1>{error}</h1>
+        return <h1 className="AccountPageError">{error}</h1>
     }
+
     return (
-        <div>
-            <h1>Аккаунт</h1>
-            <div>
-                <label>Логин</label>
-                <input value={username} onChange={(e) => setUsername(e.target.value)} />
-            </div>
+        <div className="AccountPage">
+            <div className="AccountCard">
+                <div className="AccountHeader">
+                    <div>
+                        <h1 className="AccountTitle">Аккаунт</h1>
+                        <p className="AccountSubtitle">Редактирование личных данных</p>
+                    </div>
 
-            <div>
-                <label>Имя</label>
-                <input value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-            </div>
+                    <div className="AccountRoleBlock">
+                        <span className="AccountRoleLabel">Роль</span>
+                        <span className="AccountRoleValue">{user?.role}</span>
+                    </div>
+                </div>
 
-            <div>
-                <label>Фамилия</label>
-                <input value={secondName} onChange={(e) => setSecondName(e.target.value)} />
-            </div>
+                <div className="AccountSection">
+                    <h2 className="AccountSectionTitle">Основная информация</h2>
 
-            <div>
-                <label>Отчество</label>
-                <input value={thirdName} onChange={(e) => setThirdName(e.target.value)} />
-            </div>
+                    <div className="AccountGrid">
+                        <div className="AccountField">
+                            <label>Логин</label>
+                            <input
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                            />
+                        </div>
 
-            <div>
-                <label>Почта</label>
-                <input value={email} onChange={(e) => setEmail(e.target.value)} />
-            </div>
+                        <div className="AccountField">
+                            <label>Имя</label>
+                            <input
+                                value={firstName}
+                                onChange={(e) => setFirstName(e.target.value)}
+                            />
+                        </div>
 
-            <div>
-                <label>Телефон</label>
-                <input value={personalPhone} onChange={(e) => setPersonalPhone(e.target.value)} />
-            </div>
+                        <div className="AccountField">
+                            <label>Фамилия</label>
+                            <input
+                                value={secondName}
+                                onChange={(e) => setSecondName(e.target.value)}
+                            />
+                        </div>
 
-            <div>
-                <label>Дата рождения</label>
-                <input
-                    type="date"
-                    value={birthdayDate}
-                    onChange={(e) => setBirthdayDate(e.target.value)}
-                />
-            </div>
+                        <div className="AccountField">
+                            <label>Отчество</label>
+                            <input
+                                value={thirdName}
+                                onChange={(e) => setThirdName(e.target.value)}
+                            />
+                        </div>
 
-            <div>
-                <label>Пол</label>
-                <select value={gender} onChange={(e) => setGender(e.target.value)}>
-                    <option value="MALE">MALE</option>
-                    <option value="FEMALE">FEMALE</option>
-                </select>
-            </div>
-            <div>
-                <label>Город</label>
-                <input value={city} onChange={(e) => setCity(e.target.value)} />
-            </div>
-            <div>
-                <label>Рост</label>
-                <input value={height} onChange={(e) => setHeight(e.target.value)} />
-            </div>
+                        <div className="AccountField">
+                            <label>Почта</label>
+                            <input
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </div>
 
-            <div>
-                <label>Вес</label>
-                <input value={weight} onChange={(e) => setWeight(e.target.value)} />
-            </div>
-            <div>
-                <label>Дата регистрации</label>
-                <p>{user?.dateOfRegistration}</p>
-            </div>
+                        <div className="AccountField">
+                            <label>Телефон</label>
+                            <input
+                                value={personalPhone}
+                                onChange={(e) => setPersonalPhone(e.target.value)}
+                            />
+                        </div>
 
-            <div>
-                <label>Роль</label>
-                <p>{user?.role}</p>
+                        <div className="AccountField">
+                            <label>Дата рождения</label>
+                            <input
+                                type="date"
+                                value={birthdayDate}
+                                onChange={(e) => setBirthdayDate(e.target.value)}
+                            />
+                        </div>
+
+                        <div className="AccountField">
+                            <label>Пол</label>
+                            <select
+                                value={gender}
+                                onChange={(e) => setGender(e.target.value)}
+                            >
+                                <option value="MALE">MALE</option>
+                                <option value="FEMALE">FEMALE</option>
+                            </select>
+                        </div>
+
+                        <div className="AccountField">
+                            <label>Город</label>
+                            <input
+                                value={city}
+                                onChange={(e) => setCity(e.target.value)}
+                            />
+                        </div>
+
+                        <div className="AccountField">
+                            <label>Рост</label>
+                            <input
+                                value={height}
+                                onChange={(e) => setHeight(e.target.value)}
+                            />
+                        </div>
+
+                        <div className="AccountField">
+                            <label>Вес</label>
+                            <input
+                                value={weight}
+                                onChange={(e) => setWeight(e.target.value)}
+                            />
+                        </div>
+
+                        <div className="AccountField AccountFieldReadonly">
+                            <label>Дата регистрации</label>
+                            <div className="AccountReadonlyValue">
+                                {user?.dateOfRegistration}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="AccountActions">
+                    <button className="AccountSaveButton" onClick={handleSave}>
+                        Сохранить
+                    </button>
+                </div>
+
+                {message && <div className="AccountMessageSuccess">{message}</div>}
+                {error && <div className="AccountMessageError">{error}</div>}
             </div>
-            <button onClick={handleSave}>Сохранить</button>
-            {message && <p>{message}</p>}
-            {error && <p>{error}</p>}
         </div>
     )
 }
 
-export default AccountPage
+export default AccountPage;

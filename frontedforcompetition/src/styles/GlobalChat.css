@@ -1,0 +1,30 @@
+.GlobalChat {
+    margin-top: 40px;
+    padding: 20px;
+    border: 1px solid #dcdcdc;
+    border-radius: 16px;
+    background: #ffffff;
+}
+.GlobalChatMessages {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 16px;
+    padding: 12px;
+    background: #f7f7f7;
+    border-radius: 12px;
+}
+
+.GlobalChatMessage {
+    padding: 10px;
+    margin-bottom: 10px;
+    background: white;
+    border-radius: 10px;
+}
+.GlobalChatForm {
+    display: flex;
+    gap: 10px;
+}
+.GlobalChatForm input {
+    flex: 1;
+    padding: 10px;
+}

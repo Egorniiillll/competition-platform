@@ -1,0 +1,220 @@
+.MyEventsPage {
+    padding: 40px 24px;
+    display: flex;
+    justify-content: center;
+}
+
+.MyEventsCard {
+    width: 100%;
+    max-width: 1180px;
+    background: #ffffff;
+    border: 1px solid #d9e0ea;
+    border-radius: 24px;
+    box-shadow: 0 12px 30px rgba(31, 41, 55, 0.08);
+    padding: 32px;
+}
+
+.MyEventsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.MyEventsTitle {
+    margin: 0;
+    font-size: 38px;
+    line-height: 1.1;
+}
+
+.MyEventsSubtitle {
+    margin: 8px 0 0 0;
+    color: #667085;
+    font-size: 16px;
+}
+
+.MyEventsRoleBlock {
+    min-width: 160px;
+    background: #eef3fb;
+    border: 1px solid #d6dfef;
+    border-radius: 18px;
+    padding: 14px 16px;
+}
+
+.MyEventsRoleLabel {
+    display: block;
+    font-size: 13px;
+    color: #667085;
+    margin-bottom: 6px;
+}
+
+.MyEventsRoleValue {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.MyEventsSection {
+    margin-top: 30px;
+}
+
+.MyEventsSectionTitle {
+    margin: 0 0 18px 0;
+    font-size: 28px;
+}
+
+.MyEventsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.MyEventItemCard {
+    background: #f8fafc;
+    border: 1px solid #d9e2ec;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.MyEventItemTitle {
+    margin: 0 0 14px 0;
+    font-size: 24px;
+}
+
+.MyEventInfoList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.MyEventInfoList p {
+    margin: 0;
+    color: #344054;
+    font-size: 15px;
+}
+
+.MyEventInfoList span {
+    font-weight: 700;
+    color: #111827;
+}
+
+.MyEventPayBlock {
+    margin-top: 18px;
+    padding: 16px;
+    background: #ffffff;
+    border: 1px solid #dbe4f0;
+    border-radius: 16px;
+}
+
+.MyEventHint {
+    margin: 0 0 12px 0;
+    color: #344054;
+    font-weight: 600;
+}
+
+.MyEventInput {
+    width: 100%;
+    height: 46px;
+    padding: 0 14px;
+    border: 1px solid #cfd8e3;
+    border-radius: 14px;
+    background: #f8fafc;
+    font-size: 15px;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+}
+
+.MyEventInput:focus {
+    outline: none;
+    border-color: #94a3b8;
+    background: #ffffff;
+}
+
+.MyEventButtonsRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.MyEventButton {
+    border: none;
+    background: #dfe7f5;
+    color: #111827;
+    border-radius: 14px;
+    padding: 12px 18px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.MyEventButton:hover {
+    background: #d2dced;
+}
+
+.DangerButton {
+    background: #fee4e2;
+    color: #b42318;
+}
+
+.DangerButton:hover {
+    background: #fecdca;
+}
+
+.MyEventsEmpty {
+    padding: 18px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 16px;
+    background: #f8fafc;
+    color: #475467;
+    font-weight: 600;
+}
+
+.MyEventsMessageError {
+    margin-top: 18px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    background: #fef3f2;
+    color: #b42318;
+    border: 1px solid #fecdca;
+}
+
+.MyEventsPageLoading {
+    padding: 32px;
+}
+
+@media (max-width: 920px) {
+    .MyEventsGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 760px) {
+    .MyEventsCard {
+        padding: 22px;
+        border-radius: 20px;
+    }
+
+    .MyEventsHeader {
+        flex-direction: column;
+    }
+
+    .MyEventsTitle {
+        font-size: 30px;
+    }
+
+    .MyEventsSectionTitle {
+        font-size: 24px;
+    }
+
+    .MyEventButtonsRow {
+        flex-direction: column;
+    }
+
+    .MyEventButton {
+        width: 100%;
+    }
+}

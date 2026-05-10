@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import { useEffect, useState } from "react";
 import "../styles/navbar.css";
 import type { User } from "../types/User.ts";
@@ -30,6 +30,13 @@ function NavBar() {
             <Link className="NavBlock" to="/game">Игры</Link>
             <Link className="NavBlock" to="/competition">Соревнования</Link>
             <Link className="NavBlock" to="/account">Аккаунт</Link>
+
+            <NavLink
+                to="/chat"
+                className={({ isActive }) => isActive ? "NavItem ActiveNavItem" : "NavItem"}
+            >
+                Чат
+            </NavLink>
 
             {user && (
                 <Link className="NavBlock" to="/my-events">

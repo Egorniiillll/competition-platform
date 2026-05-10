@@ -1,0 +1,187 @@
+.AccountPage {
+    padding: 40px 24px;
+    display: flex;
+    justify-content: center;
+}
+
+.AccountCard {
+    width: 100%;
+    max-width: 980px;
+    background: #ffffff;
+
+    border-radius: 24px;
+    box-shadow: 0 12px 30px rgba(31, 41, 55, 0.08);
+    padding: 32px;
+}
+
+.AccountHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.AccountTitle {
+    margin: 0;
+    font-size: 38px;
+    line-height: 1.1;
+}
+
+.AccountSubtitle {
+    margin: 8px 0 0 0;
+    color: #667085;
+    font-size: 16px;
+}
+
+.AccountRoleBlock {
+    min-width: 160px;
+    background: #eef3fb;
+    border: 1px solid #d6dfef;
+    border-radius: 18px;
+    padding: 14px 16px;
+}
+
+.AccountRoleLabel {
+    display: block;
+    font-size: 13px;
+    color: #667085;
+    margin-bottom: 6px;
+}
+
+.AccountRoleValue {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.AccountSection {
+    margin-bottom: 24px;
+}
+
+.AccountSectionTitle {
+    margin: 0 0 18px 0;
+    font-size: 24px;
+}
+
+.AccountGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.AccountField {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.AccountField label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #344054;
+}
+
+.AccountField input,
+.AccountField select {
+    height: 48px;
+    padding: 0 14px;
+    border: 1px solid #cfd8e3;
+    border-radius: 14px;
+    background: #f8fafc;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.AccountField input:focus,
+.AccountField select:focus {
+    outline: none;
+    border-color: #94a3b8;
+    background: #ffffff;
+}
+
+.AccountFieldReadonly .AccountReadonlyValue {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    border: 1px solid #e4e7ec;
+    border-radius: 14px;
+    background: #f8fafc;
+    color: #475467;
+    box-sizing: border-box;
+}
+
+.AccountActions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 28px;
+}
+
+.AccountSaveButton {
+    border: none;
+    background: #dfe7f5;
+    color: #111827;
+    border-radius: 16px;
+    padding: 14px 24px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.AccountSaveButton:hover {
+    background: #d2dced;
+}
+
+.AccountMessageSuccess,
+.AccountMessageError {
+    margin-top: 18px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.AccountMessageSuccess {
+    background: #ecfdf3;
+    color: #027a48;
+    border: 1px solid #abefc6;
+}
+
+.AccountMessageError {
+    background: #fef3f2;
+    color: #b42318;
+    border: 1px solid #fecdca;
+}
+
+.AccountPageLoading,
+.AccountPageError {
+    padding: 32px;
+}
+
+@media (max-width: 760px) {
+    .AccountCard {
+        padding: 22px;
+        border-radius: 20px;
+    }
+
+    .AccountHeader {
+        flex-direction: column;
+    }
+
+    .AccountGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .AccountTitle {
+        font-size: 30px;
+    }
+
+    .AccountActions {
+        justify-content: stretch;
+    }
+
+    .AccountSaveButton {
+        width: 100%;
+    }
+}

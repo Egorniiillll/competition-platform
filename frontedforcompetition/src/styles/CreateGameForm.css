@@ -1,0 +1,139 @@
+.CreateGamePage {
+    padding: 40px 24px;
+    display: flex;
+    justify-content: center;
+}
+
+.CreateGameCard {
+    width: 100%;
+    max-width: 1100px;
+    background: #ffffff;
+    border-radius: 24px;
+    box-shadow: 0 12px 30px rgba(31, 41, 55, 0.08);
+    padding: 32px;
+}
+
+.CreateGameHeader {
+    margin-bottom: 28px;
+}
+
+.CreateGameTitle {
+    margin: 0;
+    font-size: 38px;
+    line-height: 1.1;
+}
+
+.CreateGameSubtitle {
+    margin: 8px 0 0 0;
+    color: #667085;
+    font-size: 16px;
+}
+
+.CreateGameGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.CreateGameField {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.CreateGameFieldWide {
+    grid-column: 1 / -1;
+}
+
+.CreateGameField label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #344054;
+}
+
+.CreateGameField input,
+.CreateGameField textarea {
+    width: 100%;
+    border: none;
+    border-radius: 14px;
+    background: #f3f6fb;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.CreateGameField input {
+    height: 48px;
+    padding: 0 14px;
+}
+
+.CreateGameField textarea {
+    padding: 14px;
+    resize: vertical;
+    min-height: 120px;
+}
+
+.CreateGameField input:focus,
+.CreateGameField textarea:focus {
+    outline: none;
+    background: #ffffff;
+    box-shadow: 0 0 0 2px rgba(148, 163, 184, 0.35);
+}
+
+.CreateGameActions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 28px;
+}
+
+.CreateGameButton {
+    border: none;
+    background: #dfe7f5;
+    color: #111827;
+    border-radius: 16px;
+    padding: 14px 24px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.CreateGameButton:hover {
+    background: #d2dced;
+}
+
+.CreateGameError {
+    margin-top: 18px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    background: #fef3f2;
+    color: #b42318;
+    border: 1px solid #fecdca;
+}
+
+@media (max-width: 800px) {
+    .CreateGameCard {
+        padding: 22px;
+        border-radius: 20px;
+    }
+
+    .CreateGameTitle {
+        font-size: 30px;
+    }
+
+    .CreateGameGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .CreateGameFieldWide {
+        grid-column: auto;
+    }
+
+    .CreateGameActions {
+        justify-content: stretch;
+    }
+
+    .CreateGameButton {
+        width: 100%;
+    }
+}
