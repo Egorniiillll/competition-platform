@@ -1,6 +1,6 @@
 import {Link, NavLink} from "react-router-dom";
 import { useEffect, useState } from "react";
-import "../styles/navbar.css";
+import "../styles/NavBar.css";
 import type { User } from "../types/User.ts";
 import { getUser } from "../api/userApi.ts";
 

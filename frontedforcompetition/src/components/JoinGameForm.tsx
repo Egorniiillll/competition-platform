@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createGameApplication } from "../api/gameApplicationApi.ts";
+import { getUser } from "../api/userApi.ts";
+import type { User } from "../types/User.ts";
 
 type JoinGameFormProps = {
     gameId: number
@@ -7,10 +9,29 @@ type JoinGameFormProps = {
 }
 
 function JoinGameForm({ gameId, onSuccess }: JoinGameFormProps) {
-    const [teamName, setTeamName] = useState("")
-    const [playersCount, setPlayersCount] = useState("")
-    const [comment, setComment] = useState("")
+    const [user, setUser] = useState<User | null>(null)
+    const [loadingUser, setLoadingUser] = useState(true)
     const [error, setError] = useState("")
+
+    useEffect(() => {
+        const currentUserId = localStorage.getItem("currentUserId")
+
+        if (!currentUserId) {
+            setError("Сначала выберите пользователя")
+            setLoadingUser(false)
+            return
+        }
+
+        getUser(Number(currentUserId))
+            .then((data) => {
+                setUser(data)
+                setLoadingUser(false)
+            })
+            .catch(() => {
+                setError("Не удалось загрузить данные пользователя")
+                setLoadingUser(false)
+            })
+    }, [])
 
     async function handleSendApplication() {
         try {
@@ -24,11 +45,14 @@ function JoinGameForm({ gameId, onSuccess }: JoinGameFormProps) {
             }
 
             await createGameApplication(Number(currentUserId), gameId)
-
             onSuccess()
         } catch {
             setError("Ошибка отправки заявки")
         }
+    }
+
+    if (loadingUser) {
+        return <p>Загрузка данных участника...</p>
     }
 
     return (
@@ -36,21 +60,39 @@ function JoinGameForm({ gameId, onSuccess }: JoinGameFormProps) {
             <h2>Форма участия</h2>
 
             <input
-                placeholder="Название команды"
-                value={teamName}
-                onChange={(e) => setTeamName(e.target.value)}
+                value={`${user?.secondName ?? ""} ${user?.firstName ?? ""} ${user?.thirdName ?? ""}`.trim()}
+                readOnly
+                placeholder="ФИО"
             />
 
             <input
-                placeholder="Количество игроков"
-                value={playersCount}
-                onChange={(e) => setPlayersCount(e.target.value)}
+                value={user?.email ?? ""}
+                readOnly
+                placeholder="Email"
             />
 
             <input
-                placeholder="Комментарий"
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
+                value={user?.birthdayDate ?? ""}
+                readOnly
+                placeholder="День рождения"
+            />
+
+            <input
+                value={user?.personalPhone ?? ""}
+                readOnly
+                placeholder="Телефон"
+            />
+
+            <input
+                value={user?.weight ? String(user.weight) : ""}
+                readOnly
+                placeholder="Вес"
+            />
+
+            <input
+                value={user?.height ? String(user.height) : ""}
+                readOnly
+                placeholder="Рост"
             />
 
             <button onClick={handleSendApplication}>
