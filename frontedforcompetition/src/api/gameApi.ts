@@ -1,34 +1,27 @@
-import type {Game} from "../types/Game.ts";
-
+import type { Game } from "../types/Game.ts";
 
 export async function getAllGames(): Promise<Game[]> {
-
     const response = await fetch(`http://localhost:8080/getAllGames`)
-    if (! response.ok) {
+    if (!response.ok) {
         throw new Error("Не удалось загрузить игры")
     }
 
-    return (await response).json();
+    return response.json()
 }
-
-
 
 export async function getOneGame(id: number): Promise<Game> {
     const response = await fetch(`http://localhost:8080/getOneGame/${id}`)
-    if (! response.ok) {
+    if (!response.ok) {
         throw new Error("Не удалось загрузить игру")
     }
-    return (await response).json();
+    return response.json()
 }
-
-
 
 export async function createGame(game: {
     name: string
     description: string
     requirement: string
     types: string
-    createdAt: string
     startDate: string
     endDate: string
     imageURL: string
@@ -44,10 +37,10 @@ export async function createGame(game: {
         },
         body: JSON.stringify(game)
     })
+
     if (!response.ok) {
         throw new Error("Не удалось создать игру")
     }
-
 }
 
 export async function getGamesByOrganizer(id: number): Promise<Game[]> {

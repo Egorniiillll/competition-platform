@@ -1,6 +1,5 @@
 package ru.hse.efremov.competition_platform.controller;
 
-
 import org.springframework.web.bind.annotation.*;
 import ru.hse.efremov.competition_platform.entity.Game;
 import ru.hse.efremov.competition_platform.entity.User;
@@ -24,28 +23,39 @@ public class GameConroller {
         this.userService = userService;
     }
 
-
     @PostMapping("/createGame")
     public void createGame(@RequestBody Map<String, String> body) {
         String name = body.get("name");
         String description = body.get("description");
         String requirement = body.get("requirement");
         String types = body.get("types");
-        LocalDateTime createdAt = LocalDateTime.parse(body.get("createdAt"));
+
+        LocalDateTime createdAt = LocalDateTime.now();
         LocalDateTime startDate = LocalDateTime.parse(body.get("startDate"));
         LocalDateTime endDate = LocalDateTime.parse(body.get("endDate"));
+
         String imageURL = body.get("imageURL");
         String city = body.get("city");
         String address = body.get("address");
         BigDecimal price = new BigDecimal(body.get("price"));
+
         Integer organizerId = Integer.parseInt(body.get("organizerId"));
         User organizer = userService.getUser(organizerId);
 
-        gameService.createNewGame(name, description, requirement,
-                types, createdAt, startDate,
-                endDate, imageURL, city,
-                address, price, organizer);
-
+        gameService.createNewGame(
+                name,
+                description,
+                requirement,
+                types,
+                createdAt,
+                startDate,
+                endDate,
+                imageURL,
+                city,
+                address,
+                price,
+                organizer
+        );
     }
 
     @GetMapping("/getOneGame/{id}")
@@ -62,5 +72,4 @@ public class GameConroller {
     public List<Game> getAllGames() {
         return gameService.getAllGames();
     }
-
 }

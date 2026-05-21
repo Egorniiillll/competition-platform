@@ -1,12 +1,21 @@
-import {Link, NavLink} from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "../styles/NavBar.css";
 import type { User } from "../types/User.ts";
 import { getUser } from "../api/userApi.ts";
 
+function navLinkClass({ isActive }: { isActive: boolean }) {
+    return isActive ? "NavBlock NavBlockActive" : "NavBlock"
+}
+
 function NavBar() {
+    const location = useLocation()
     const [showNewEventMenu, setShowNewEventMenu] = useState(false)
     const [user, setUser] = useState<User | null>(null)
+
+    const isNewEventActive =
+        location.pathname === "/new-event/game" ||
+        location.pathname === "/new-event/competition"
 
     useEffect(() => {
         const currentUserId = localStorage.getItem("currentUserId")
@@ -26,22 +35,26 @@ function NavBar() {
 
     return (
         <div className="NavBar">
-            <Link className="NavBlock" to="/">Главная</Link>
-            <Link className="NavBlock" to="/game">Игры</Link>
-            <Link className="NavBlock" to="/competition">Соревнования</Link>
-            <Link className="NavBlock" to="/account">Аккаунт</Link>
-
-            <NavLink
-                to="/chat"
-                className={({ isActive }) => isActive ? "NavItem ActiveNavItem" : "NavItem"}
-            >
+            <NavLink to="/" end className={navLinkClass}>
+                Главная
+            </NavLink>
+            <NavLink to="/game" className={navLinkClass}>
+                Игры
+            </NavLink>
+            <NavLink to="/competition" className={navLinkClass}>
+                Соревнования
+            </NavLink>
+            <NavLink to="/account" className={navLinkClass}>
+                Аккаунт
+            </NavLink>
+            <NavLink to="/my-chats" className={navLinkClass}>
                 Чат
             </NavLink>
 
             {user && (
-                <Link className="NavBlock" to="/my-events">
+                <NavLink to="/my-events" className={navLinkClass}>
                     Мои события
-                </Link>
+                </NavLink>
             )}
 
             {user?.role === "ORGANIZER" && (
@@ -50,17 +63,29 @@ function NavBar() {
                     onMouseEnter={() => setShowNewEventMenu(true)}
                     onMouseLeave={() => setShowNewEventMenu(false)}
                 >
-                    <div className="NavBlock">Новое событие</div>
+                    <div className={isNewEventActive ? "NavBlock NavBlockActive" : "NavBlock"}>
+                        Новое событие
+                    </div>
 
                     {showNewEventMenu && (
                         <div className="NavDropdownMenu">
-                            <Link className="NavDropdownItem" to="/new-event/game">
+                            <NavLink
+                                className={({ isActive }) =>
+                                    isActive ? "NavDropdownItem NavDropdownItemActive" : "NavDropdownItem"
+                                }
+                                to="/new-event/game"
+                            >
                                 Создать игру
-                            </Link>
+                            </NavLink>
 
-                            <Link className="NavDropdownItem" to="/new-event/competition">
+                            <NavLink
+                                className={({ isActive }) =>
+                                    isActive ? "NavDropdownItem NavDropdownItemActive" : "NavDropdownItem"
+                                }
+                                to="/new-event/competition"
+                            >
                                 Создать соревнование
-                            </Link>
+                            </NavLink>
                         </div>
                     )}
                 </div>

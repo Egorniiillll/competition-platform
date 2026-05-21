@@ -31,6 +31,8 @@ public class User {
     private String city;
     private double height;
     private double weight;
+    @Column(name = "user_password")
+    private String password;
 
     public User() {
     }
@@ -44,10 +46,10 @@ public class User {
         ORGANIZER
     }
 
-    public User(Role role,String username, String firstName, String secondName,
+    public User(Role role, String username, String firstName, String secondName,
                 String thirdName, String email, LocalDate birthdayDate,
                 LocalDateTime dateOfRegistration, String personalPhone,
-                Gender gender, String city, double height, double weight) {
+                Gender gender, String city, double height, double weight, String password) {
         this.username = username;
         this.firstName = firstName;
         this.secondName = secondName;
@@ -61,5 +63,6 @@ public class User {
         this.height = height;
         this.weight = weight;
         this.role = role;
+        this.password = password;
     }
 }

@@ -34,7 +34,7 @@ public class CompetitionController {
         String description = body.get("description");
         String shortDescription = body.get("shortDescription");
 
-        LocalDateTime createdAt = LocalDateTime.parse(body.get("createdAt"));
+        LocalDateTime createdAt = LocalDateTime.now();
         LocalDateTime startDate = LocalDateTime.parse(body.get("startDate"));
         LocalDateTime endDate = LocalDateTime.parse(body.get("endDate"));
 

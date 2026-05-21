@@ -1,0 +1,123 @@
+.EventChat {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 640px;
+}
+
+.EventChatHeader {
+    margin-bottom: 18px;
+}
+
+.EventChatTitle {
+    margin: 0;
+    font-size: 30px;
+}
+
+.EventChatSubtitle {
+    margin: 8px 0 0 0;
+    color: #667085;
+    font-size: 16px;
+}
+
+.EventChatError {
+    margin-bottom: 14px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    background: #fef3f2;
+    color: #b42318;
+    border: 1px solid #fecdca;
+}
+
+.EventChatMessages {
+    flex: 1;
+    min-height: 420px;
+    max-height: 420px;
+    overflow-y: auto;
+    background: #f8fafc;
+    border-radius: 18px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.EventChatEmpty {
+    color: #667085;
+    font-weight: 600;
+}
+
+.EventChatMessage {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 14px 16px;
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.05);
+}
+
+.EventChatMessageHeader {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: #667085;
+}
+
+.EventChatMessage p {
+    margin: 0;
+    color: #111827;
+    word-break: break-word;
+}
+
+.EventChatForm {
+    display: flex;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.EventChatInput {
+    flex: 1;
+    height: 48px;
+    border: none;
+    border-radius: 14px;
+    background: #f3f6fb;
+    padding: 0 14px;
+    font-size: 15px;
+}
+
+.EventChatInput:focus {
+    outline: none;
+    background: #ffffff;
+    box-shadow: 0 0 0 2px rgba(148, 163, 184, 0.35);
+}
+
+.EventChatButton {
+    border: none;
+    background: #dfe7f5;
+    color: #111827;
+    border-radius: 16px;
+    padding: 0 22px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.EventChatButton:hover {
+    background: #d2dced;
+}
+
+@media (max-width: 700px) {
+    .EventChatForm {
+        flex-direction: column;
+    }
+
+    .EventChatButton {
+        height: 48px;
+    }
+
+    .EventChatMessages {
+        max-height: 360px;
+    }
+}

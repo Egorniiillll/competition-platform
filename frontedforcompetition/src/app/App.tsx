@@ -17,7 +17,8 @@ import MyEventsPage from "../pages/MyEventsPage.tsx";
 import CompetitionDetailsPage from "../pages/CompetitionDetailsPage.tsx";
 
 import CreateGamePage from "../pages/CreateGamePage.tsx";
-import GlobalChat from "../components/GlobalChat.tsx";
+import MyChatsPage from "../pages/MyChatsPage.tsx";
+
 
 
 
@@ -43,7 +44,7 @@ function App() {
                 <Route path="/my-events" element={<MyEventsPage />} />
                 <Route path="/my-applications" element={<MyApplicationsPage />} />
                 <Route path="/competition/:id" element={<CompetitionDetailsPage />} />
-                <Route path="/chat" element={<GlobalChat />} />
+                <Route path="/my-chats" element={<MyChatsPage />} />
             </Routes>
         </div>
     )

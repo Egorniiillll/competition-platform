@@ -25,6 +25,7 @@ public class UserController {
         String firstName = body.get("firstName");
         String secondName = body.get("secondName");
         String thirdName = body.get("thirdName");
+        String password = body.get("password");
         String email = body.get("email");
         LocalDate birthdayDate = LocalDate.parse(body.get("birthdayDate"));
         LocalDateTime dateOfRegistration = LocalDateTime.parse(body.get("dateOfRegistration"));
@@ -39,7 +40,7 @@ public class UserController {
         userService.createUser(role, username, firstName, secondName,
                 thirdName, email, birthdayDate,
                 dateOfRegistration, personalPhone,
-                gender, city, height, weight);
+                gender, city, height, weight,password);
     }
 
     @GetMapping("/user/{id}")
@@ -72,5 +73,15 @@ public class UserController {
                 Double.parseDouble(body.get("height")),
                 Double.parseDouble(body.get("weight"))
         );
+    }
+    @PostMapping("/login")
+    public User login(@RequestBody Map<String, String> body) {
+        String login = body.get("login");
+        if (login == null || login.isBlank()) {
+            login = body.get("email");
+        }
+        String password = body.get("password");
+
+        return userService.login(login, password);
     }
 }

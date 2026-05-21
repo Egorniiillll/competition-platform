@@ -1,13 +1,8 @@
 package ru.hse.efremov.competition_platform.service;
 
-
-
 import org.springframework.stereotype.Service;
-
 import ru.hse.efremov.competition_platform.entity.User;
 import ru.hse.efremov.competition_platform.repository.UserRepository;
-
-
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,13 +19,35 @@ public class UserService {
     public void createUser(User.Role role, String username, String firstName, String secondName,
                            String thirdName, String email, LocalDate birthdayDate,
                            LocalDateTime dateOfRegistration, String personalPhone,
-                           User.Gender gender, String city, double height, double weight) {
-        User user = new User(role, username, firstName, secondName,
-                thirdName, email, birthdayDate,
-                dateOfRegistration, personalPhone,
-                gender, city, height, weight);
-        userRepository.save(user);
+                           User.Gender gender, String city, double height, double weight, String password) {
+        if (password == null || password.isBlank()) {
+            throw new IllegalArgumentException("Пароль обязателен");
+        }
 
+        User user = new User(
+                role,
+                username,
+                firstName,
+                secondName,
+                thirdName,
+                email,
+                birthdayDate,
+                dateOfRegistration,
+                personalPhone,
+                gender,
+                city,
+                height,
+                weight,
+                password
+        );
+
+        userRepository.save(user);
+    }
+
+    public User login(String emailOrUsername, String password) {
+        return userRepository.findByEmailAndPassword(emailOrUsername, password)
+                .or(() -> userRepository.findByUsernameAndPassword(emailOrUsername, password))
+                .orElseThrow();
     }
 
     public User getUser(Integer id) {
@@ -40,6 +57,7 @@ public class UserService {
     public List<User> getAllUser() {
         return userRepository.findAll();
     }
+
     public User updateUser(Integer id,
                            String username,
                            String firstName,

@@ -7,7 +7,6 @@ function CreateGameForm() {
     const [name, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [requirement, setRequirement] = useState("")
-    const [createdAt, setCreatedAt] = useState("")
     const [startDate, setStartDate] = useState("")
     const [endDate, setEndDate] = useState("")
     const [imageURL, setImageURL] = useState("")
@@ -35,7 +34,6 @@ function CreateGameForm() {
                 description,
                 requirement,
                 types,
-                createdAt,
                 startDate,
                 endDate,
                 imageURL,
@@ -101,15 +99,6 @@ function CreateGameForm() {
                     </div>
 
                     <div className="CreateGameField">
-                        <label>Дата создания</label>
-                        <input
-                            type="datetime-local"
-                            value={createdAt}
-                            onChange={(e) => setCreatedAt(e.target.value)}
-                        />
-                    </div>
-
-                    <div className="CreateGameField">
                         <label>Дата начала</label>
                         <input
                             type="datetime-local"
@@ -155,8 +144,9 @@ function CreateGameForm() {
                     </div>
 
                     <div className="CreateGameField">
-                        <label>Цена</label>
+                        <label>цена</label>
                         <input
+                            type="number"
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
                             placeholder="Например: 1000"

@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createCompetition } from "../api/competitionApi.ts";
+import { getGamesByOrganizer } from "../api/gameApi.ts";
+import type { Game } from "../types/Game.ts";
 import "../styles/CreateCompetitionForm.css";
 
 function CreateCompetitionForm() {
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [shortDescription, setShortDescription] = useState("")
-    const [createdAt, setCreatedAt] = useState("")
     const [startDate, setStartDate] = useState("")
     const [endDate, setEndDate] = useState("")
     const [imageURL, setImageURL] = useState("")
@@ -16,16 +17,33 @@ function CreateCompetitionForm() {
     const [placeName, setPlaceName] = useState("")
     const [entryFee, setEntryFee] = useState("")
     const [maxParticipants, setMaxParticipants] = useState("")
-    const [currentParticipants, setCurrentParticipants] = useState("")
+    const [currentParticipants, setCurrentParticipants] = useState("0")
     const [requirements, setRequirements] = useState("")
     const [minAge, setMinAge] = useState("")
     const [maxAge, setMaxAge] = useState("")
     const [status, setStatus] = useState("OPEN")
     const [format, setFormat] = useState("SOLO")
     const [gameId, setGameId] = useState("")
+    const [games, setGames] = useState<Game[]>([])
     const [error, setError] = useState("")
 
     const navigate = useNavigate()
+
+    useEffect(() => {
+        const organizerId = localStorage.getItem("currentUserId")
+
+        if (!organizerId) {
+            return
+        }
+
+        getGamesByOrganizer(Number(organizerId))
+            .then((data) => {
+                setGames(data)
+            })
+            .catch(() => {
+                setError("Не удалось загрузить игры организатора")
+            })
+    }, [])
 
     async function handleCreateCompetition() {
         try {
@@ -38,11 +56,15 @@ function CreateCompetitionForm() {
                 return
             }
 
+            if (!gameId) {
+                setError("Выберите игру")
+                return
+            }
+
             await createCompetition({
                 title,
                 description,
                 shortDescription,
-                createdAt,
                 startDate,
                 endDate,
                 imageURL,
@@ -107,15 +129,6 @@ function CreateCompetitionForm() {
                     </div>
 
                     <div className="CreateCompetitionField">
-                        <label>Дата создания</label>
-                        <input
-                            type="datetime-local"
-                            value={createdAt}
-                            onChange={(e) => setCreatedAt(e.target.value)}
-                        />
-                    </div>
-
-                    <div className="CreateCompetitionField">
                         <label>Дата начала</label>
                         <input
                             type="datetime-local"
@@ -172,6 +185,7 @@ function CreateCompetitionForm() {
                     <div className="CreateCompetitionField">
                         <label>Взнос</label>
                         <input
+                            type="number"
                             value={entryFee}
                             onChange={(e) => setEntryFee(e.target.value)}
                             placeholder="Например: 1000"
@@ -181,6 +195,7 @@ function CreateCompetitionForm() {
                     <div className="CreateCompetitionField">
                         <label>Максимум участников</label>
                         <input
+                            type="number"
                             value={maxParticipants}
                             onChange={(e) => setMaxParticipants(e.target.value)}
                             placeholder="Введите число"
@@ -190,6 +205,7 @@ function CreateCompetitionForm() {
                     <div className="CreateCompetitionField">
                         <label>Текущее число участников</label>
                         <input
+                            type="number"
                             value={currentParticipants}
                             onChange={(e) => setCurrentParticipants(e.target.value)}
                             placeholder="Введите число"
@@ -208,6 +224,7 @@ function CreateCompetitionForm() {
                     <div className="CreateCompetitionField">
                         <label>Минимальный возраст</label>
                         <input
+                            type="number"
                             value={minAge}
                             onChange={(e) => setMinAge(e.target.value)}
                             placeholder="Например: 18"
@@ -217,6 +234,7 @@ function CreateCompetitionForm() {
                     <div className="CreateCompetitionField">
                         <label>Максимальный возраст</label>
                         <input
+                            type="number"
                             value={maxAge}
                             onChange={(e) => setMaxAge(e.target.value)}
                             placeholder="Например: 35"
@@ -225,10 +243,7 @@ function CreateCompetitionForm() {
 
                     <div className="CreateCompetitionField">
                         <label>Статус</label>
-                        <select
-                            value={status}
-                            onChange={(e) => setStatus(e.target.value)}
-                        >
+                        <select value={status} onChange={(e) => setStatus(e.target.value)}>
                             <option value="DRAFT">DRAFT</option>
                             <option value="OPEN">OPEN</option>
                             <option value="CLOSED">CLOSED</option>
@@ -239,22 +254,22 @@ function CreateCompetitionForm() {
 
                     <div className="CreateCompetitionField">
                         <label>Формат</label>
-                        <select
-                            value={format}
-                            onChange={(e) => setFormat(e.target.value)}
-                        >
+                        <select value={format} onChange={(e) => setFormat(e.target.value)}>
                             <option value="SOLO">SOLO</option>
                             <option value="TEAM">TEAM</option>
                         </select>
                     </div>
 
                     <div className="CreateCompetitionField">
-                        <label>ID игры</label>
-                        <input
-                            value={gameId}
-                            onChange={(e) => setGameId(e.target.value)}
-                            placeholder="Введите ID игры"
-                        />
+                        <label>Игра</label>
+                        <select value={gameId} onChange={(e) => setGameId(e.target.value)}>
+                            <option value="">Выберите игру</option>
+                            {games.map((game) => (
+                                <option key={game.id} value={game.id}>
+                                    {game.name}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                 </div>
 
