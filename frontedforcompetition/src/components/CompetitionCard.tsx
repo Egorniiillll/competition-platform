@@ -21,13 +21,23 @@ function CompetitionCard({
                              imageURL,
                              description,
                              shortDescription,
-                             createdAt,
                              startDate,
                              endDate,
                              city,
                              address,
                              entryFee
                          }: CompetitionCardProps) {
+
+    function formatDate(date: string) {
+        return new Date(date).toLocaleString("ru-RU", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit"
+        });
+    }
+
     return (
         <Link to={`/competition/${id}`} className="CompetitionCardLink">
             <div className="CompetitionCard">
@@ -43,14 +53,18 @@ function CompetitionCard({
 
                 <div className="CompetitionCardContent">
                     <h2>{title}</h2>
-                    <p>shortDescription: {shortDescription}</p>
-                    <p>description: {description}</p>
-                    <p>createdAt: {createdAt}</p>
-                    <p>city: {city}</p>
-                    <p>startDate: {startDate}</p>
-                    <p>endDate: {endDate}</p>
-                    <p>address: {address}</p>
-                    <p>entryFee: {entryFee}</p>
+
+                    <p className="CompetitionShortDescription">
+                        {shortDescription || description}
+                    </p>
+
+                    <div className="CompetitionCardInfo">
+                        <p><span>Город:</span> {city}</p>
+                        <p><span>Начало:</span> {formatDate(startDate)}</p>
+                        <p><span>Окончание:</span> {formatDate(endDate)}</p>
+                        <p><span>Адрес:</span> {address}</p>
+                        <p><span>Цена:</span> {entryFee} ₽</p>
+                    </div>
                 </div>
             </div>
         </Link>

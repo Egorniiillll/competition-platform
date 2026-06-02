@@ -15,7 +15,9 @@ public class Competition {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String title;
+    @Column(length = 1000)
     private String description;
+    @Column(length = 1000)
     private String shortDescription;
     private LocalDateTime createdAt;
     private LocalDateTime startDate;

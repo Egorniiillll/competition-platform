@@ -1,5 +1,6 @@
 package ru.hse.efremov.competition_platform.service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.hse.efremov.competition_platform.entity.User;
 import ru.hse.efremov.competition_platform.repository.UserRepository;
@@ -11,9 +12,12 @@ import java.util.List;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository,
+                       PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public void createUser(User.Role role, String username, String firstName, String secondName,
@@ -38,16 +42,22 @@ public class UserService {
                 city,
                 height,
                 weight,
-                password
+                passwordEncoder.encode(password)
         );
 
         userRepository.save(user);
     }
 
     public User login(String emailOrUsername, String password) {
-        return userRepository.findByEmailAndPassword(emailOrUsername, password)
-                .or(() -> userRepository.findByUsernameAndPassword(emailOrUsername, password))
+        User user = userRepository.findByEmail(emailOrUsername)
+                .or(() -> userRepository.findByUsername(emailOrUsername))
                 .orElseThrow();
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new RuntimeException("Неверный пароль");
+        }
+
+        return user;
     }
 
     public User getUser(Integer id) {

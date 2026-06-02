@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { createGameApplication } from "../api/gameApplicationApi.ts";
 import { getUser } from "../api/userApi.ts";
 import type { User } from "../types/User.ts";
+import "../styles/JoinGameForm.css";
 
 type JoinGameFormProps = {
     gameId: number
@@ -52,54 +53,59 @@ function JoinGameForm({ gameId, onSuccess }: JoinGameFormProps) {
     }
 
     if (loadingUser) {
-        return <p>Загрузка данных участника...</p>
+        return <p className="JoinGameLoading">Загрузка данных участника...</p>
     }
 
     return (
-        <div>
+        <div className="JoinGameForm">
             <h2>Форма участия</h2>
 
-            <input
-                value={`${user?.secondName ?? ""} ${user?.firstName ?? ""} ${user?.thirdName ?? ""}`.trim()}
-                readOnly
-                placeholder="ФИО"
-            />
+            <div className="JoinGameGrid">
+                <div className="JoinGameField JoinGameFieldWide">
+                    <label>ФИО</label>
+                    <input
+                        value={`${user?.secondName ?? ""} ${user?.firstName ?? ""} ${user?.thirdName ?? ""}`.trim()}
+                        readOnly
+                    />
+                </div>
 
-            <input
-                value={user?.email ?? ""}
-                readOnly
-                placeholder="Email"
-            />
+                <div className="JoinGameField">
+                    <label>Email</label>
+                    <input value={user?.email ?? ""} readOnly />
+                </div>
 
-            <input
-                value={user?.birthdayDate ?? ""}
-                readOnly
-                placeholder="День рождения"
-            />
+                <div className="JoinGameField">
+                    <label>Дата рождения</label>
+                    <input value={user?.birthdayDate ?? ""} readOnly />
+                </div>
 
-            <input
-                value={user?.personalPhone ?? ""}
-                readOnly
-                placeholder="Телефон"
-            />
+                <div className="JoinGameField">
+                    <label>Телефон</label>
+                    <input value={user?.personalPhone ?? ""} readOnly />
+                </div>
 
-            <input
-                value={user?.weight ? String(user.weight) : ""}
-                readOnly
-                placeholder="Вес"
-            />
+                <div className="JoinGameField">
+                    <label>Вес</label>
+                    <input
+                        value={user?.weight ? String(user.weight) : ""}
+                        readOnly
+                    />
+                </div>
 
-            <input
-                value={user?.height ? String(user.height) : ""}
-                readOnly
-                placeholder="Рост"
-            />
+                <div className="JoinGameField">
+                    <label>Рост</label>
+                    <input
+                        value={user?.height ? String(user.height) : ""}
+                        readOnly
+                    />
+                </div>
+            </div>
 
-            <button onClick={handleSendApplication}>
+            <button className="JoinGameButton" onClick={handleSendApplication}>
                 Отправить заявку
             </button>
 
-            {error && <p>{error}</p>}
+            {error && <p className="JoinGameError">{error}</p>}
         </div>
     )
 }

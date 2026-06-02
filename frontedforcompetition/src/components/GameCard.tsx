@@ -21,30 +21,47 @@ function GameCard({
                       imageURL,
                       description,
                       types,
-                      createdAt,
                       startDate,
                       endDate,
                       city,
                       address,
                       price
                   }: GameCardProps) {
+
+    function formatDate(date: string) {
+        return new Date(date).toLocaleString("ru-RU", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit"
+        });
+    }
+
     return (
         <Link to={`/game/${id}`} className="GameCardLink">
             <div className="GameCard">
                 <div className="GameCardImageBlock">
-                    {imageURL && <img src={imageURL} alt={name} className="GameImage" />}
+                    {imageURL && (
+                        <img src={imageURL} alt={name} className="GameImage" />
+                    )}
                 </div>
 
                 <div className="GameCardContent">
                     <h2>{name}</h2>
-                    <p>description: {description}</p>
-                    <p>types: {types}</p>
-                    <p>createdAt: {createdAt}</p>
-                    <p>city: {city}</p>
-                    <p>startDate: {startDate}</p>
-                    <p>endDate: {endDate}</p>
-                    <p>address: {address}</p>
-                    <p>price: {price}</p>
+
+                    <p className="GameDescription">
+                        {description}
+                    </p>
+
+                    <div className="GameCardInfo">
+                        <p><span>Тип:</span> {types}</p>
+                        <p><span>Город:</span> {city}</p>
+                        <p><span>Начало:</span> {formatDate(startDate)}</p>
+                        <p><span>Окончание:</span> {formatDate(endDate)}</p>
+                        <p><span>Адрес:</span> {address}</p>
+                        <p><span>Цена:</span> {price} ₽</p>
+                    </div>
                 </div>
             </div>
         </Link>

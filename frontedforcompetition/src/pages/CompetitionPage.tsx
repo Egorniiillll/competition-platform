@@ -2,22 +2,24 @@ import type { Competition } from "../types/Competition.ts";
 import { useEffect, useState } from "react";
 import { getAllCompetitions } from "../api/competitionApi.ts";
 import CompetitionCard from "../components/CompetitionCard.tsx";
+import Filter from "../components/Filter.tsx";
 import "../styles/CompetitionPage.css";
 
 function CompetitionPage() {
-    const [competitions, setCompetition] = useState<Competition[]>([])
+    const [competitions, setCompetitions] = useState<Competition[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState("")
+    const [filterType, setFilterType] = useState("all")
     const [filterCity, setFilterCity] = useState("all")
 
     useEffect(() => {
         getAllCompetitions()
             .then((data) => {
-                setCompetition(data)
+                setCompetitions(data)
                 setLoading(false)
             })
             .catch(() => {
-                setError("Ошибка загрузки")
+                setError("Ошибка загрузки соревнований")
                 setLoading(false)
             })
     }, [])
@@ -30,41 +32,47 @@ function CompetitionPage() {
         return <h1>{error}</h1>
     }
 
+    const uniqueTypes = [...new Set(competitions.map((competition) => competition.types))]
     const uniqueCities = [...new Set(competitions.map((competition) => competition.city))]
 
     const filteredCompetitions = competitions.filter((competition) => {
-        return filterCity === "all" || competition.city === filterCity
+        const matchesType = filterType === "all" || competition.types === filterType
+        const matchesCity = filterCity === "all" || competition.city === filterCity
+
+        return matchesType && matchesCity
     })
 
     return (
         <div className="CompetitionPage">
+            <h1 className="CompetitionPageTitle">Соревнования</h1>
 
+            <Filter
+                filterType={filterType}
+                setFilterType={setFilterType}
+                filterCity={filterCity}
+                setFilterCity={setFilterCity}
+                types={uniqueTypes}
+                cities={uniqueCities}
+            />
 
-            <select value={filterCity} onChange={(e) => setFilterCity(e.target.value)}>
-                <option value="all">Все города</option>
-                {uniqueCities.map((city) => (
-                    <option key={city} value={city}>
-                        {city}
-                    </option>
+            <div className="CompetitionList">
+                {filteredCompetitions.map((competition) => (
+                    <CompetitionCard
+                        key={competition.id}
+                        id={competition.id}
+                        title={competition.title}
+                        description={competition.description}
+                        shortDescription={competition.shortDescription}
+                        createdAt={competition.createdAt}
+                        startDate={competition.startDate}
+                        endDate={competition.endDate}
+                        city={competition.city}
+                        address={competition.address}
+                        entryFee={competition.entryFee}
+                        imageURL={competition.imageURL}
+                    />
                 ))}
-            </select>
-
-            {filteredCompetitions.map((competition) => (
-                <CompetitionCard
-                    key={competition.id}
-                    id={competition.id}
-                    title={competition.title}
-                    description={competition.description}
-                    shortDescription={competition.shortDescription}
-                    createdAt={competition.createdAt}
-                    startDate={competition.startDate}
-                    endDate={competition.endDate}
-                    city={competition.city}
-                    address={competition.address}
-                    entryFee={competition.entryFee}
-                    imageURL={competition.imageURL}
-                />
-            ))}
+            </div>
         </div>
     )
 }

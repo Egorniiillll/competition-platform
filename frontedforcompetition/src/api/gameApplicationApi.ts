@@ -7,8 +7,8 @@ export async function createGameApplication(userId: number, gameId: number): Pro
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            userId: String(userId),
-            gameId: String(gameId)
+            userId,
+            gameId
         })
     })
 

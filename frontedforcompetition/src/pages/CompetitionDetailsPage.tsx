@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { Competition } from "../types/Competition.ts";
 import type { CompetitionApplication } from "../types/CompetitionApplication.ts";
 import { getOneCompetition } from "../api/competitionApi.ts";
@@ -19,10 +19,24 @@ function CompetitionDetailsPage() {
     const [showForm, setShowForm] = useState(false)
     const [application, setApplication] = useState<CompetitionApplication | null>(null)
 
+    const loadApplication = useCallback(async () => {
+        const currentUserId = localStorage.getItem("currentUserId")
+        if (!id || !currentUserId) {
+            return
+        }
+
+        const applicationsData = await getCompetitionApplicationsByUser(Number(currentUserId))
+        const currentApplication = applicationsData.find(
+            (item) => item.competition.id === Number(id)
+        )
+        setApplication(currentApplication || null)
+    }, [id])
+
     useEffect(() => {
         const currentUserId = localStorage.getItem("currentUserId")
 
         if (!id || !currentUserId) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setLoading(false)
             return
         }
@@ -44,6 +58,7 @@ function CompetitionDetailsPage() {
                 setLoading(false)
             })
     }, [id])
+
     if (loading) {
         return <h1>Загрузка...</h1>
     }
@@ -80,9 +95,10 @@ function CompetitionDetailsPage() {
                             {showForm && competition?.id && (
                                 <JoinCompetitionForm
                                     competitionId={competition.id}
-                                    onSuccess={() => {
+                                    onSuccess={async () => {
                                         setShowForm(false)
                                         setMessage("Заявка успешно отправлена")
+                                        await loadApplication()
                                     }}
                                 />
                             )}

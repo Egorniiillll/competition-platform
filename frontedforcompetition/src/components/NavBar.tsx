@@ -35,17 +35,12 @@ function NavBar() {
 
     return (
         <div className="NavBar">
-            <NavLink to="/" end className={navLinkClass}>
-                Главная
-            </NavLink>
+
             <NavLink to="/game" className={navLinkClass}>
                 Игры
             </NavLink>
             <NavLink to="/competition" className={navLinkClass}>
                 Соревнования
-            </NavLink>
-            <NavLink to="/account" className={navLinkClass}>
-                Аккаунт
             </NavLink>
             <NavLink to="/my-chats" className={navLinkClass}>
                 Чат
@@ -56,6 +51,12 @@ function NavBar() {
                     Мои события
                 </NavLink>
             )}
+            <NavLink to="/account" className={navLinkClass}>
+                Аккаунт
+            </NavLink>
+            <NavLink to="/" end className={navLinkClass}>
+                Выход
+            </NavLink>
 
             {user?.role === "ORGANIZER" && (
                 <div
@@ -93,7 +94,7 @@ function NavBar() {
 
             {user && (
                 <div className="NavUserInfo">
-                    {user.username} ({user.role})
+                    {user.username}
                 </div>
             )}
         </div>

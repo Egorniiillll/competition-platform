@@ -8,6 +8,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.hse.efremov.competition_platform.entity.Game;
 import ru.hse.efremov.competition_platform.entity.User;
+import ru.hse.efremov.competition_platform.exception.GlobalExceptionHandler;
 import ru.hse.efremov.competition_platform.service.GameService;
 import ru.hse.efremov.competition_platform.service.UserService;
 
@@ -23,7 +24,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(GameConroller.class)
+@WebMvcTest(controllers = GameConroller.class)
+@org.springframework.context.annotation.Import(GlobalExceptionHandler.class)
 class GameConrollerTest {
 
     @Autowired

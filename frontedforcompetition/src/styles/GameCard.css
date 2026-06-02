@@ -1,23 +1,16 @@
-
-.GameCardImageBlock{
-    width: 100%;
-    height: 220px;
-    background-color: #f3f3f3;
-}
-.GameImage {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
 .GameCard {
     background-color: rgba(204, 215, 238, 0.6);
     margin-top: 50px;
     width: 320px;
     border-radius: 20px;
     overflow: hidden;
-
     border: 1px solid #ddd;
+    transition: 0.2s;
+}
+
+.GameCard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
 .GameCardLink {
@@ -26,11 +19,44 @@
     display: block;
     cursor: pointer;
 }
-.GameCard {
-    transition: 0.2s;
+
+.GameCardImageBlock {
+    width: 100%;
+    height: 220px;
+    background-color: #f3f3f3;
 }
 
-.GameCard:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+.GameImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.GameCardContent {
+    padding: 18px;
+}
+
+.GameCardContent h2 {
+    margin: 0 0 10px;
+    font-size: 22px;
+    line-height: 1.2;
+    color: #111827;
+}
+
+.GameDescription {
+    margin: 0 0 14px;
+    font-size: 15px;
+    line-height: 1.4;
+    color: #374151;
+}
+
+.GameCardInfo p {
+    margin: 7px 0;
+    font-size: 14px;
+    color: #111827;
+}
+
+.GameCardInfo span {
+    font-weight: 700;
 }

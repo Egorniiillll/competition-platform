@@ -1,9 +1,208 @@
-.GameDetailsImage{
-    object-fit: cover;
-    width: 500px;
-    height: 400px;
-    border-radius: 16px;
+.GameDetailsPage {
+    min-height: calc(100vh - 90px);
+    background-color: #f8fafc;
 }
-.GameDetailsPage{
-    display: flex;
+
+.GameDetailsContainer {
+    width: 100%;
+}
+
+.GameDetailsHero {
+    display: block;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: none;
+}
+
+.GameDetailsImageBlock {
+    width: 100%;
+    height: 430px;
+    border-radius: 0;
+    overflow: hidden;
+    background-color: #f3f3f3;
+}
+
+.GameDetailsImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
+}
+
+.GameDetailsMain {
+    max-width: 1100px;
+    margin: -70px auto 0;
+    position: relative;
+    z-index: 2;
+    padding: 36px;
+    border-radius: 28px;
+    background-color: white;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.14);
+}
+
+.GameDetailsType {
+    width: fit-content;
+    margin: 0 0 14px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background-color: #e8eefb;
+    font-size: 14px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.GameDetailsMain h1 {
+    margin: 0 0 18px;
+    font-size: 44px;
+    line-height: 1.15;
+    color: #111827;
+}
+
+.GameDetailsDescription {
+    max-width: 900px;
+    margin: 0 0 28px;
+    font-size: 18px;
+    line-height: 1.6;
+    color: #374151;
+}
+
+.GameDetailsInfoGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.GameDetailsInfoItem {
+    padding: 18px;
+    border-radius: 18px;
+    background-color: #f8fafc;
+}
+
+.GameDetailsInfoItem span {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #6b7280;
+}
+
+.GameDetailsInfoItem p {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.GameDetailsRequirement {
+    padding: 20px;
+    border-radius: 18px;
+    background-color: #f8fafc;
+}
+
+.GameDetailsRequirement span {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #6b7280;
+}
+
+.GameDetailsRequirement p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #111827;
+}
+
+.GameDetailsActions {
+    margin-top: 26px;
+}
+
+.GameDetailsActions button {
+    padding: 14px 32px;
+    border: none;
+    border-radius: 14px;
+    background-color: #111827;
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.GameDetailsActions button:hover {
+    background-color: #374151;
+}
+
+.GameApplicationBlock {
+    margin-top: 24px;
+    padding: 18px;
+    border-radius: 18px;
+    background-color: #f8fafc;
+}
+
+.GameApplicationBlock p {
+    margin: 8px 0;
+    font-size: 16px;
+    color: #111827;
+}
+
+.GameApplicationBlock span {
+    font-weight: 700;
+}
+
+.GameDetailsChatBlock {
+    max-width: 1100px;
+    margin: 32px auto;
+    padding: 28px;
+    border-radius: 24px;
+    background-color: white;
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.1);
+}
+
+.SuccessMessage {
+    margin-top: 16px;
+    color: green;
+    font-weight: 700;
+}
+
+.ErrorMessage {
+    margin-top: 16px;
+    color: red;
+    font-weight: 700;
+}
+
+.GameDetailsLoading {
+    padding: 40px 64px;
+}
+
+@media (max-width: 1000px) {
+    .GameDetailsInfoGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .GameDetailsMain {
+        margin: -60px 20px 0;
+    }
+}
+
+@media (max-width: 600px) {
+    .GameDetailsImageBlock {
+        height: 280px;
+    }
+
+    .GameDetailsMain {
+        margin: -40px 14px 0;
+        padding: 22px;
+    }
+
+    .GameDetailsMain h1 {
+        font-size: 30px;
+    }
+
+    .GameDetailsInfoGrid {
+        grid-template-columns: 1fr;
+    }
 }

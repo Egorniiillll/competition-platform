@@ -1,7 +1,10 @@
 package ru.hse.efremov.competition_platform.controller;
 
 
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+import ru.hse.efremov.competition_platform.dto.CreateUserRequest;
+import ru.hse.efremov.competition_platform.dto.LoginRequest;
 import ru.hse.efremov.competition_platform.entity.User;
 import ru.hse.efremov.competition_platform.service.UserService;
 
@@ -14,33 +17,31 @@ import java.util.Map;
 @RestController
 public class UserController {
     private final UserService userService;
-
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @PostMapping("/user")
-    public void createUser(@RequestBody Map<String, String> body) {
-        String username = body.get("username");
-        String firstName = body.get("firstName");
-        String secondName = body.get("secondName");
-        String thirdName = body.get("thirdName");
-        String password = body.get("password");
-        String email = body.get("email");
-        LocalDate birthdayDate = LocalDate.parse(body.get("birthdayDate"));
-        LocalDateTime dateOfRegistration = LocalDateTime.parse(body.get("dateOfRegistration"));
-        String personalPhone = body.get("personalPhone");
-        User.Gender gender = User.Gender.valueOf(body.get("gender"));
-        String city = body.get("city");
-        User.Role role = User.Role.valueOf(body.get("role"));
-        double height = Double.parseDouble(body.get("height"));
-        double weight = Double.parseDouble(body.get("weight"));
-
-
-        userService.createUser(role, username, firstName, secondName,
-                thirdName, email, birthdayDate,
-                dateOfRegistration, personalPhone,
-                gender, city, height, weight,password);
+    public void createUser(@Valid @RequestBody CreateUserRequest request) {
+        LocalDateTime dateOfRegistration = request.getDateOfRegistration() != null
+                ? request.getDateOfRegistration()
+                : LocalDateTime.now();
+        userService.createUser(
+                User.Role.valueOf(request.getRole().trim().toUpperCase()),
+                request.getUsername().trim(),
+                request.getFirstName().trim(),
+                request.getSecondName().trim(),
+                request.getThirdName().trim(),
+                request.getEmail().trim(),
+                request.getBirthdayDate(),
+                dateOfRegistration,
+                request.getPersonalPhone().trim(),
+                User.Gender.valueOf(request.getGender().trim().toUpperCase()),
+                request.getCity().trim(),
+                Double.parseDouble(request.getHeight()),
+                Double.parseDouble(request.getWeight()),
+                request.getPassword()
+        );
     }
 
     @GetMapping("/user/{id}")
@@ -54,11 +55,7 @@ public class UserController {
     }
 
     @PatchMapping("/user/{id}")
-
-    public User updateUser(@PathVariable Integer id,
-
-                           @RequestBody Map<String, String> body) {
-
+    public User updateUser(@PathVariable Integer id, @RequestBody Map<String, String> body) {
         return userService.updateUser(
                 id,
                 body.get("username"),
@@ -74,14 +71,9 @@ public class UserController {
                 Double.parseDouble(body.get("weight"))
         );
     }
-    @PostMapping("/login")
-    public User login(@RequestBody Map<String, String> body) {
-        String login = body.get("login");
-        if (login == null || login.isBlank()) {
-            login = body.get("email");
-        }
-        String password = body.get("password");
 
-        return userService.login(login, password);
+    @PostMapping("/login")
+    public User login(@Valid @RequestBody LoginRequest request) {
+        return userService.login(request.resolveIdentifier(), request.getPassword());
     }
 }

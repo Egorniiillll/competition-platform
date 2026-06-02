@@ -1,0 +1,81 @@
+.JoinGameForm {
+    margin-top: 24px;
+    padding: 26px;
+    border-radius: 22px;
+    background-color: #f8fafc;
+}
+
+.JoinGameForm h2 {
+    margin: 0 0 20px;
+    font-size: 28px;
+    color: #111827;
+}
+
+.JoinGameGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.JoinGameField {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.JoinGameFieldWide {
+    grid-column: span 2;
+}
+
+.JoinGameField label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #374151;
+}
+
+.JoinGameField input {
+    padding: 13px 15px;
+    border: none;
+    border-radius: 12px;
+    background-color: white;
+    font-size: 15px;
+    color: #111827;
+    outline: none;
+}
+
+.JoinGameButton {
+    margin-top: 22px;
+    padding: 14px 30px;
+    border: none;
+    border-radius: 14px;
+    background-color: #111827;
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.JoinGameButton:hover {
+    background-color: #374151;
+}
+
+.JoinGameError {
+    margin-top: 14px;
+    color: red;
+    font-weight: 700;
+}
+
+.JoinGameLoading {
+    margin-top: 18px;
+    color: #374151;
+}
+
+@media (max-width: 700px) {
+    .JoinGameGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .JoinGameFieldWide {
+        grid-column: span 1;
+    }
+}

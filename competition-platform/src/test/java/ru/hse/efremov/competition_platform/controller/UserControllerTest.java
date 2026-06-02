@@ -8,6 +8,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.hse.efremov.competition_platform.entity.User;
+import ru.hse.efremov.competition_platform.exception.GlobalExceptionHandler;
 import ru.hse.efremov.competition_platform.service.UserService;
 
 import java.time.LocalDate;
@@ -22,7 +23,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(UserController.class)
+@WebMvcTest(controllers = UserController.class)
+@org.springframework.context.annotation.Import(GlobalExceptionHandler.class)
 class UserControllerTest {
 
     @Autowired

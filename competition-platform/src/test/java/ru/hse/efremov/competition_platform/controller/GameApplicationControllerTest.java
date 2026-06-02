@@ -9,6 +9,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import ru.hse.efremov.competition_platform.entity.Game;
 import ru.hse.efremov.competition_platform.entity.GameApplication;
 import ru.hse.efremov.competition_platform.entity.User;
+import ru.hse.efremov.competition_platform.exception.GlobalExceptionHandler;
 import ru.hse.efremov.competition_platform.service.GameApplicationService;
 import ru.hse.efremov.competition_platform.service.GameService;
 import ru.hse.efremov.competition_platform.service.UserService;
@@ -26,7 +27,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(GameApplicationController.class)
+@WebMvcTest(controllers = GameApplicationController.class)
+@org.springframework.context.annotation.Import(GlobalExceptionHandler.class)
 class GameApplicationControllerTest {
 
     @Autowired
@@ -65,8 +67,8 @@ class GameApplicationControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
-                                  "userId": "1",
-                                  "gameId": "1"
+                                  "userId": 1,
+                                  "gameId": 1
                                 }
                                 """))
                 .andExpect(status().isOk());

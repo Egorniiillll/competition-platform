@@ -33,6 +33,7 @@ function MyChatsPage() {
 
     useEffect(() => {
         if (!currentUserId) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setError("Пользователь не выбран")
             setLoading(false)
             return

@@ -1,29 +1,43 @@
 .NavBar {
     display: flex;
-    gap: 16px;
-    padding: 16px;
-    background-color: white;
-    border-bottom: 1px solid #ddd;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 36px;
+    border-bottom: 1px solid #d1d5db;
+}
+
+.NavLeft {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .NavBlock {
-    padding: 10px 16px;
+    padding: 10px 18px;
     border: 1px solid #cbd5e1;
-    border-radius: 10px;
+    border-radius: 12px;
     background-color: #f8fafc;
+    color: #111827;
     text-decoration: none;
-    color: black;
+    font-size: 17px;
+    font-weight: 700;
     cursor: pointer;
 }
 
-.NavBlock:hover {
-    background-color: #e2e8f0;
+.NavBlockActive {
+    background-color: #dbe3f1;
+    border-color: #94a3b8;
 }
 
-.NavBlockActive {
-    background-color: #e2e8f0;
-    border-color: #94a3b8;
-    font-weight: 600;
+.NavLogoutButton {
+    font-family: inherit;
+}
+
+.NavUserInfo {
+    margin-left: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #374151;
 }
 
 .NavDropdown {
@@ -32,32 +46,27 @@
 
 .NavDropdownMenu {
     position: absolute;
-    top: calc(100% + 2px);
+    top: calc(100% + 8px);
     left: 0;
-    min-width: 180px;
-    display: flex;
-    flex-direction: column;
+    z-index: 10;
+    min-width: 220px;
+    padding: 8px;
+    border-radius: 14px;
     background-color: white;
-    border: 1px solid #cbd5e1;
-    border-radius: 10px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    overflow: hidden;
-    z-index: 50;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
 }
 
 .NavDropdownItem {
-    padding: 12px 16px;
+    display: block;
+    padding: 12px 14px;
+    border-radius: 10px;
+    color: #111827;
     text-decoration: none;
-    color: black;
-    background-color: white;
-    margin-top: 1px;
-}
-
-.NavDropdownItem:hover {
-    background-color: #f1f5f9;
-}
-
-.NavDropdownItemActive {
-    background-color: #e2e8f0;
+    font-size: 15px;
     font-weight: 600;
+}
+
+.NavDropdownItem:hover,
+.NavDropdownItemActive {
+    background-color: #eef2ff;
 }

@@ -1,5 +1,7 @@
 package ru.hse.efremov.competition_platform.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,7 +33,9 @@ public class User {
     private String city;
     private double height;
     private double weight;
+    @JsonIgnore
     @Column(name = "user_password")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     public User() {
